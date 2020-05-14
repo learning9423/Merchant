@@ -13,12 +13,14 @@ class TestCalculate(unittest.TestCase):
         self.assertEqual(Calculate().multi(),6)
 
     def test_divide(self):
-        self.assertEqual(Calculate().divide(),0)
+        self.assertEqual(Calculate().divide(),1)
 
 if __name__ == '__main__':
 
     suite=unittest.TestSuite()
 
-    suite.addTests(TestCalculate('test_add'))
+    suite.addTest(TestCalculate('test_add'))
+    suite.addTest(TestCalculate('test_divide'))
 
-    unittest.TextTestRunner().run(suite)
+    runner=unittest.TextTestRunner()
+    runner.run(suite)
