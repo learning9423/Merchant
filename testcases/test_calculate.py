@@ -5,6 +5,7 @@ from service.calculate import *
 class TestCalculate(unittest.TestCase):
 
     def test_add(self):
+
        self.assertEqual(Calculate().add(),5)
 
     def test_minus(self):
