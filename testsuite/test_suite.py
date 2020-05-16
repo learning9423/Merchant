@@ -1,6 +1,5 @@
 import unittest
 from HTMLTestRunner import HTMLTestRunner
-from datetime import datetime
 import time
 class test_suite(unittest.TestCase):
     def add_case(self):

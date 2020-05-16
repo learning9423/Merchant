@@ -116,19 +116,19 @@ function html_escape(s) {
 <div class='heading'>
 <h1 style="font-family: Microsoft YaHei">商家后台测试报告</h1>
 <p class='attribute'><strong>测试人员 : </strong> 测试李建刚</p>
-<p class='attribute'><strong>开始时间 : </strong> 2020-05-15 17:55:11</p>
-<p class='attribute'><strong>合计耗时 : </strong> 0:00:00.010961</p>
-<p class='attribute'><strong>测试结果 : </strong> 共 4，通过 3，失败 1，通过率= 75.00%</p>
+<p class='attribute'><strong>开始时间 : </strong> 2020-05-16 15:10:58</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:04.243808</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 9，通过 7，失败 2，通过率= 77.78%</p>
 
 <p class='description'>测试</p>
 </div>
 
 
 <p id='show_detail_line'>
-<a class="btn btn-primary" href='javascript:showCase(0)'>通过率(75.00%)</a>
-<a class="btn btn-danger" href='javascript:showCase(1)'>失败(1)</a>
-<a class="btn btn-success" href='javascript:showCase(2)'>通过(3)</a>
-<a class="btn btn-info" href='javascript:showCase(3)'>所有(4)</a>
+<a class="btn btn-primary" href='javascript:showCase(0)'>通过率(77.78%)</a>
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败(2)</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过(7)</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有(9)</a>
 </p>
 <table id='result_table' class="table table-condensed table-bordered table-hover">
 <colgroup>
@@ -158,7 +158,7 @@ function html_escape(s) {
 </tr>
 
 <tr id='pt1_1' class='hiddenRow'>
-    <td class='passCase'><div class='testcase'>test_add</div></td>
+    <td class='passCase'><div class='testcase'>test_add: 测试用例1：哈哈</div></td>
     <td colspan='5' align='center'><span class="label label-success success">通过</span></td>
 </tr>
 
@@ -174,7 +174,7 @@ function html_escape(s) {
     <pre>
     
 ft1_2: Traceback (most recent call last):
-  File "F:\jgliwork\unittest\testcases\test_calculate.py", line 17, in test_divide
+  File "F:\jgliwork\unittest\testcases\test_calculate.py", line 18, in test_divide
     self.assertEqual(Calculate().divide(),1)
 AssertionError: 0 != 1
 
@@ -194,13 +194,123 @@ AssertionError: 0 != 1
     <td colspan='5' align='center'><span class="label label-success success">通过</span></td>
 </tr>
 
+<tr class='failClass warning'>
+    <td>test_login.TestLogin</td>
+    <td class="text-center">5</td>
+    <td class="text-center">4</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',5)" class="detail" id='c2'>详细</a></td>
+</tr>
+
+<tr id='ft2_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_login1: 用户名和密码都正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_1'>失败</button>
+    <div id='div_ft2_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_1'>失败</button>
+    <div id='div_ft2_1' class="collapse in">
+    <pre>
+    
+ft2_1: Traceback (most recent call last):
+  File "F:\jgliwork\unittest\testcases\test_login.py", line 13, in test_login1
+    self.assertEqual(r.json()['code'],'SUCCESS')
+AssertionError: 'ERROR' != 'SUCCESS'
+- ERROR
++ SUCCESS
+
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login2: 用户名密码都错误</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_2'>通过</button>
+    <div id='div_pt2_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_2'>通过</button>
+    <div id='div_pt2_2' class="collapse in">
+    <pre>
+    
+pt2_2: {"code":"ERROR","msg":"\u60a8\u586b\u5199\u7684\u7528\u6237\u540d\u6216\u5bc6\u7801\u4e0d\u5339\u914d","isNeedToEmailVerify":false}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login3: 用户名正确密码错误</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_3'>通过</button>
+    <div id='div_pt2_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_3'>通过</button>
+    <div id='div_pt2_3' class="collapse in">
+    <pre>
+    
+pt2_3: {"code":"ERROR","msg":"\u60a8\u586b\u5199\u7684\u7528\u6237\u540d\u6216\u5bc6\u7801\u4e0d\u5339\u914d","isNeedToEmailVerify":false}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login4: 用户名错误密码正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_4'>通过</button>
+    <div id='div_pt2_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_4'>通过</button>
+    <div id='div_pt2_4' class="collapse in">
+    <pre>
+    
+pt2_4: {"code":"ERROR","msg":"\u60a8\u586b\u5199\u7684\u7528\u6237\u540d\u6216\u5bc6\u7801\u4e0d\u5339\u914d","isNeedToEmailVerify":false}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login5: 用户名密码为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_5'>通过</button>
+    <div id='div_pt2_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_5'>通过</button>
+    <div id='div_pt2_5' class="collapse in">
+    <pre>
+    
+pt2_5: {"code":"ERROR","msg":"\u60a8\u586b\u5199\u7684\u7528\u6237\u540d\u6216\u5bc6\u7801\u4e0d\u5339\u914d","isNeedToEmailVerify":false}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
 <tr id='total_row' class="text-center active">
     <td>总计</td>
-    <td>4</td>
-    <td>3</td>
-    <td>1</td>
+    <td>9</td>
+    <td>7</td>
+    <td>2</td>
     <td>0</td>
-    <td>通过率：75.00%</td>
+    <td>通过率：77.78%</td>
 </tr>
 </table>
 
