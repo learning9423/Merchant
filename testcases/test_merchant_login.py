@@ -8,7 +8,7 @@ class TestLogin(unittest.TestCase):
 
     def test_login1(self):
         '''用户名和密码都正确'''
-        user={'acct':'yzhang','pswd':'Lb123457','H_sbmt':'yes'}
+        user={'acct':'yzhang','pswd':'Lb123456','H_sbmt':'yes'}
         r=requests.post(url=self.login_url,data=user,headers=self.headers)
         self.assertEqual(r.json()['code'],'SUCCESS')
 
@@ -36,7 +36,8 @@ class TestLogin(unittest.TestCase):
         r=requests.post(url=self.login_url,data=user,headers=self.headers)
         self.assertEqual(r.json()['code'],'ERROR')
 
-
+if __name__ == '__main__':
+    TestLogin().test_login1()
 
 
 
