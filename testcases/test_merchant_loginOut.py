@@ -8,8 +8,4 @@ class LoginOut(unittest.TestCase):
         headers={'Content-Type':'application/x-www-form-urlencoded','Authorization':'Basic bGViYmF5OnBhc3N3MHJk'}
         r=requests.post(url=url,headers=headers,allow_redirects=False)
         self.assertEqual(r.status_code,302)
-        print(r.text)
-
-
-if __name__ == '__main__':
-    LoginOut().test_login_out()
+        print(r.json())

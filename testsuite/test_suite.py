@@ -5,7 +5,7 @@ class test_suite(unittest.TestCase):
     def add_case(self):
         suite=unittest.TestSuite()
         spath=r'F:\jgliwork\unittest\testcases'
-        suite.addTests(unittest.defaultTestLoader.discover(spath,pattern='test*.py'))
+        suite.addTests(unittest.defaultTestLoader.discover(spath,pattern='test_merchant_login.py'))
         return suite
 
 

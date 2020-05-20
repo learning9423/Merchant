@@ -11,30 +11,35 @@ class TestLogin(unittest.TestCase):
         user={'acct':'yzhang','pswd':'Lb123456','H_sbmt':'yes'}
         r=requests.post(url=self.login_url,data=user,headers=self.headers)
         self.assertEqual(r.json()['code'],'SUCCESS')
+        print(r.json())
 
     def test_login2(self):
         '''用户名密码都错误'''
         user={'acct':'yzhan','pswd':'LB123456','H_sbmt':'yes'}
         r=requests.post(url=self.login_url,data=user,headers=self.headers)
         self.assertEqual(r.json()['code'],'ERROR')
+        print(r.json())
 
     def test_login3(self):
         '''用户名正确密码错误'''
         user={'acct':'yzhang','pswd':'LB123456','H_sbmt':'yes'}
         r=requests.post(url=self.login_url,data=user,headers=self.headers)
         self.assertEqual(r.json()['code'],'ERROR')
+        print(r.json())
 
     def test_login4(self):
         '''用户名错误密码正确'''
         user={'acct':'yzhan','pswd':'Lb123456','H_sbmt':'yes'}
         r=requests.post(url=self.login_url,data=user,headers=self.headers)
         self.assertEqual(r.json()['code'],'ERROR')
+        print(r.json())
 
     def test_login5(self):
         '''用户名密码为空'''
         user={'acct':'','pswd':'','H_sbmt':'yes'}
         r=requests.post(url=self.login_url,data=user,headers=self.headers)
         self.assertEqual(r.json()['code'],'ERROR')
+        print(r.json())
 
 if __name__ == '__main__':
     TestLogin().test_login1()
