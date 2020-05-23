@@ -25,7 +25,7 @@ class AbleSale(unittest.TestCase):
         '''token和商品id都正确'''
         token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzk2NjU4NDIsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoidGVzdDEifQ.4C7GbksLP3xbbM2Y-5_SYYBb1aUYL_mZ9igQMxZhkpU'
         result=self.find_one()
-        error_list=range(41001,41150)
+        error_list=range(50001)
         i=0
         while True:
             data = {'token': token, 'goods_list':result[i]}
