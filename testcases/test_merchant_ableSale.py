@@ -5,7 +5,7 @@ from retrying import retry
 
 
 class AbleSale(unittest.TestCase):
-    sql = "select vg.virtual_goods_id from virtual_goods vg inner join goods g on g.goods_id=vg.goods_id where g.is_on_sale='0' and g.merchant_id='13' and g.is_delete='0' and g.sale_status='normal';"
+    sql = "select vg.virtual_goods_id from virtual_goods vg inner join goods g on g.goods_id=vg.goods_id where g.is_on_sale='0' and g.merchant_id='13' and g.is_delete='0' and sale_status='normal';"
     sale_url = 'https://m-t1.vova.com.hk/api/v1/product/enableSale'
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}
 
@@ -25,17 +25,20 @@ class AbleSale(unittest.TestCase):
         '''token和商品id都正确'''
         token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzk2NjU4NDIsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoidGVzdDEifQ.4C7GbksLP3xbbM2Y-5_SYYBb1aUYL_mZ9igQMxZhkpU'
         result=self.find_one()
-        data = {'token': token, 'goods_list':result[0]}
-
-        # while True:
-        r = requests.post(url=self.sale_url, json=data, headers=self.headers)
-            # if r.json()['data']['errors_list'][0]['code'] =="41013" :
-
-        print(data.get('goods_list'))
-            #     continue
-            # else:
-            #     print(r.json())
-            #     break
+        error_list=range(41001,41150)
+        i=0
+        while True:
+            data = {'token': token, 'goods_list':result[i]}
+            r = requests.post(url=self.sale_url, json=data, headers=self.headers)
+            i+=1
+            if r.json()['data']['errors_list'][0]['code'] in error_list:
+                data['goods_list']=result[i]
+                print(data['goods_list'])
+                print(r.json())
+                continue
+            else:
+                print(r.json())
+                break
         # self.assertEqual(r.json()['execute_status'],'failed')
         # print(data.get('goods_list'))
 
