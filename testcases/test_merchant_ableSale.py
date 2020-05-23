@@ -9,30 +9,36 @@ class AbleSale(unittest.TestCase):
     sale_url = 'https://m-t1.vova.com.hk/api/v1/product/enableSale'
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}
 
-    @retry(stop_max_attempt_number=5)
-    def __init__(self):
+    @retry(stop_max_attempt_number=5,wait_random_max=1000)
+    def find_one(self):
         self.con = pymysql.Connect(host='123.206.135.211',
                                    port=3306,
                                    user='vvxxthemis',
                                    password='q3YBGG6JxE67xcYY1s0jIyBY4OmKqhg=',
                                    database='themis')
-        # charset='utf-8'
-        self._type_equality_funcs = {}
-
-    def find_one(self):
         self.cur = self.con.cursor()
         self.cur.execute(self.sql)
         self.con.commit()
-        result=self.cur.fetchone()
-        return result
+        return self.cur.fetchall()
+
     def test_ableSale1(self):
         '''token和商品id都正确'''
         token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzk2NjU4NDIsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoidGVzdDEifQ.4C7GbksLP3xbbM2Y-5_SYYBb1aUYL_mZ9igQMxZhkpU'
-        data = {'token': token, 'goods_list': self.find_one()}
+        result=self.find_one()
+        data = {'token': token, 'goods_list':result[0]}
 
+        # while True:
         r = requests.post(url=self.sale_url, json=data, headers=self.headers)
+            # if r.json()['data']['errors_list'][0]['code'] =="41013" :
+
         print(data.get('goods_list'))
-        print(r.json())
+            #     continue
+            # else:
+            #     print(r.json())
+            #     break
+        # self.assertEqual(r.json()['execute_status'],'failed')
+        # print(data.get('goods_list'))
+
 
     def test_ableSale2(self):
         '''商品id错误'''
@@ -40,8 +46,7 @@ class AbleSale(unittest.TestCase):
         data = {'token': token, 'goods_list': [124]}
 
         r = requests.post(url=self.sale_url, json=data, headers=self.headers)
-        print(r.json())
-
+        print(r.json()['data']['errors_list'][0]['code'])
 
     def test_ableSale3(self):
         '''token错误'''
@@ -49,7 +54,9 @@ class AbleSale(unittest.TestCase):
         data = {'token': token, 'goods_list': self.find_one()}
 
         r = requests.post(url=self.sale_url, json=data, headers=self.headers)
-        print(r.status_code)
         self.assertEqual(r.text, '"Token error"')
         self.assertEqual(r.status_code, 401)
         print(r.json())
+
+if __name__ == '__main__':
+    AbleSale().test_ableSale1()

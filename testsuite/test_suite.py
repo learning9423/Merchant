@@ -1,11 +1,13 @@
+import time
 import unittest
 from HTMLTestRunner import HTMLTestRunner
-import time
+
+
 class test_suite(unittest.TestCase):
     def add_case(self):
         suite=unittest.TestSuite()
-        spath=r'F:\jgliwork\unittest\testcases'
-        suite.addTests(unittest.defaultTestLoader.discover(spath,pattern='test_merchant_login.py'))
+        spath='../testcases'
+        suite.addTests(unittest.defaultTestLoader.discover(spath,pattern='test_merchant_ableSale.py'))
         return suite
 
 
