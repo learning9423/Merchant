@@ -25,7 +25,7 @@ class test_suite(unittest.TestCase):
         logger = logging.getLogger()
         logger.debug(self.add_case())
         with open(rpath,'wb+') as f:
-            runner=HTMLTestRunner(stream=f,title='商家后台测试报告',description='商家后台接口测试，本次测试接口为登录退出，上架下架',verbosity=2)
+            runner=HTMLTestRunner(stream=f,title='商家后台测试报告',description='商家后台测试环境接口测试，本次测试接口为商品模块接口',verbosity=2)
             return runner.run(self.add_case())
 
 if __name__ == '__main__':
