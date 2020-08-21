@@ -55,35 +55,44 @@ class UpdateSkuImg(unittest.TestCase):
     def test_updateSkuImg3(self):
         '''token正确，其余参数为空或无效'''
         cur=self.find_productData()
-        cur.execute(self.sql2)
+        cur.execute(self.sql1)
         self.con.commit()
 
         result=cur.fetchall()
         token='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo'
-        updateSkuImg_data={'token':token,'product_id':result[0][0],'sku_img_info':[{'goods_sku':result[0][1],'img_id':str(result[0][2])}]}
-        print(updateSkuImg_data['sku_img_info'][0]['goods_sku'])
+
         for i in range(3):
              if i==0:
-                updateSkuImg_data['product_id']=''
+                updateSkuImg_data={'token':token,'product_id':'','sku_img_info':[{'goods_sku':result[0][1],'img_id':str(result[0][2])}]}
                 r=requests.post(url=self.updateSkuImg_url,headers=self.headers,json=updateSkuImg_data)
                 print(r.json())
-                print(updateSkuImg_data)
                 self.assertEqual(r.json()['execute_status'], 'failed')
                 self.assertEqual(r.json()['data']['code'] ,40001)
              elif i==1:
-                updateSkuImg_data['sku_img_info'][0]['goods_sku']='a'
+                updateSkuImg_data={'token':token,'product_id':result[0][0],'sku_img_info':[{'goods_sku':'a','img_id':str(result[0][2])}]}
                 r=requests.post(url=self.updateSkuImg_url,headers=self.headers,json=updateSkuImg_data)
                 print(r.json())
-                print(updateSkuImg_data)
                 self.assertEqual(r.json()['execute_status'], 'failed')
-                self.assertEqual(r.json()['data']['code'] ,41020)
+                self.assertEqual(r.json()['data']['errors_list'][0]['code'] ,41020)
              elif i==2:
-                updateSkuImg_data['sku_img_info'][0]['img_id']='a1'
+                updateSkuImg_data={'token':token,'product_id':result[0][0],'sku_img_info':[{'goods_sku':result[0][1],'img_id':'a1'}]}
                 r=requests.post(url=self.updateSkuImg_url,headers=self.headers,json=updateSkuImg_data)
                 print(r.json())
-                print(updateSkuImg_data)
                 self.assertEqual(r.json()['execute_status'], 'failed')
-                self.assertEqual(r.json()['data']['code'] ,41021)
+                self.assertEqual(r.json()['data']['errors_list'][0]['code'] ,41021)
+    def test_updateSkuImg4(self):
+        '''参数不为空，参数有效'''
+        cur=self.find_productData()
+        cur.execute(self.sql1)
+        self.con.commit()
+
+        result=cur.fetchall()
+        token='e'
+        updateSkuImg_data={'token':token,'product_id':result[0][0],'sku_img_info':[{'goods_sku':result[0][1],'img_id':str(result[0][2])}]}
+
+        r=requests.post(url=self.updateSkuImg_url,headers=self.headers,json=updateSkuImg_data)
+        print(r.json())
+        self.assertEqual(r.json(), 'Token error')
 
 if __name__ == '__main__':
     UpdateSkuImg().test_updateSkuImg3()
