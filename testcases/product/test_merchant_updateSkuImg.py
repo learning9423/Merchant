@@ -7,6 +7,7 @@ from retrying import retry
 class UpdateSkuImg(unittest.TestCase):
     updateSkuImg_url='https://m-t1.vova.com.hk/api/v1/product/updateSkuImg'
     headers={'Content-Type':'application/x-www-form-urlencoded','Authorization':'Basic bGViYmF5OnBhc3N3MHJk'}
+    token ='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo'
     sql1="select vg.virtual_goods_id,gs.pdd_sku,gs.img_id from virtual_goods vg inner join goods_sku gs on vg.goods_id = gs.goods_id " \
         "inner join goods g on g.goods_id=gs.goods_id where g.is_delete ='0' and merchant_id='13' and g.goods_sn like 'SN%' and g.is_on_sale='1';"
     sql2="select vg.virtual_goods_id,gs.pdd_sku,gs.img_id from virtual_goods vg inner join goods_sku gs on vg.goods_id = gs.goods_id " \
@@ -25,10 +26,8 @@ class UpdateSkuImg(unittest.TestCase):
         cur=self.find_productData()
         cur.execute(self.sql1)
         self.con.commit()
-
         result=cur.fetchall()
-        token='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo'
-        updateSkuImg_data={'token':token,'product_id':result[0][0],'sku_img_info':[{'goods_sku':result[0][1],'img_id':str(result[0][2])}]}
+        updateSkuImg_data={'token':self.token,'product_id':result[0][0],'sku_img_info':[{'goods_sku':result[0][1],'img_id':str(result[0][2])}]}
 
         r=requests.post(url=self.updateSkuImg_url,headers=self.headers,json=updateSkuImg_data)
         print(r.json())
@@ -41,10 +40,8 @@ class UpdateSkuImg(unittest.TestCase):
         cur=self.find_productData()
         cur.execute(self.sql2)
         self.con.commit()
-
         result=cur.fetchall()
-        token='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo'
-        updateSkuImg_data={'token':token,'product_id':result[0][0],'sku_img_info':[{'goods_sku':result[0][1],'img_id':str(result[0][2])}]}
+        updateSkuImg_data={'token':self.token,'product_id':result[0][0],'sku_img_info':[{'goods_sku':result[0][1],'img_id':str(result[0][2])}]}
 
         r=requests.post(url=self.updateSkuImg_url,headers=self.headers,json=updateSkuImg_data)
         print(r.json())
@@ -57,35 +54,33 @@ class UpdateSkuImg(unittest.TestCase):
         cur=self.find_productData()
         cur.execute(self.sql1)
         self.con.commit()
-
         result=cur.fetchall()
-        token='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo'
 
         for i in range(3):
              if i==0:
-                updateSkuImg_data={'token':token,'product_id':'','sku_img_info':[{'goods_sku':result[0][1],'img_id':str(result[0][2])}]}
+                updateSkuImg_data={'token':self.token,'product_id':'','sku_img_info':[{'goods_sku':result[0][1],'img_id':str(result[0][2])}]}
                 r=requests.post(url=self.updateSkuImg_url,headers=self.headers,json=updateSkuImg_data)
                 print(r.json())
                 self.assertEqual(r.json()['execute_status'], 'failed')
                 self.assertEqual(r.json()['data']['code'] ,40001)
              elif i==1:
-                updateSkuImg_data={'token':token,'product_id':result[0][0],'sku_img_info':[{'goods_sku':'a','img_id':str(result[0][2])}]}
+                updateSkuImg_data={'token':self.token,'product_id':result[0][0],'sku_img_info':[{'goods_sku':'a','img_id':str(result[0][2])}]}
                 r=requests.post(url=self.updateSkuImg_url,headers=self.headers,json=updateSkuImg_data)
                 print(r.json())
                 self.assertEqual(r.json()['execute_status'], 'failed')
                 self.assertEqual(r.json()['data']['errors_list'][0]['code'] ,41020)
              elif i==2:
-                updateSkuImg_data={'token':token,'product_id':result[0][0],'sku_img_info':[{'goods_sku':result[0][1],'img_id':'a1'}]}
+                updateSkuImg_data={'token':self.token,'product_id':result[0][0],'sku_img_info':[{'goods_sku':result[0][1],'img_id':'a1'}]}
                 r=requests.post(url=self.updateSkuImg_url,headers=self.headers,json=updateSkuImg_data)
                 print(r.json())
                 self.assertEqual(r.json()['execute_status'], 'failed')
                 self.assertEqual(r.json()['data']['errors_list'][0]['code'] ,41021)
+
     def test_updateSkuImg4(self):
         '''参数不为空，参数有效'''
         cur=self.find_productData()
         cur.execute(self.sql1)
         self.con.commit()
-
         result=cur.fetchall()
         token='e'
         updateSkuImg_data={'token':token,'product_id':result[0][0],'sku_img_info':[{'goods_sku':result[0][1],'img_id':str(result[0][2])}]}
