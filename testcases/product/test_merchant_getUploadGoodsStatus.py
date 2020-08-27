@@ -14,7 +14,6 @@ class GetUploadGoodsStatus(unittest.TestCase):
         url = "https://m-t1.vova.com.hk/api/v1/product/uploadGoods"
         headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}
         parent_sku='a'+str(random.randint(1,10000))
-        print(parent_sku)
         data = {
             "token":self.token,
             "items": [{
@@ -50,8 +49,29 @@ class GetUploadGoodsStatus(unittest.TestCase):
 
         r=requests.post(url=self.getUploadGoodsStatus_url,headers=self.headers,json=getUploadGoodsStatus_data)
         print(r.json())
-        self.assertEqual(r.json()['execute_status'],'success')
+        if r.json()['code']=='loading':
+            self.assertEqual(r.json()['code'],'loading')
+        else:
+            self.assertEqual(r.json()['code'],'success')
 
+    def getUploadGoodsStatus2(self):
+        '''token不正确，批次id正确'''
+        r_upload=self.setUp()
+        token='e'
+        getUploadGoodsStatus_data={"token": token,"conditions": {"upload_batch_id": r_upload.json()['data']['upload_batch_id']}}
+
+        r=requests.post(url=self.getUploadGoodsStatus_url,headers=self.headers,json=getUploadGoodsStatus_data)
+        print(r.json())
+        self.assertEqual(r.json(),'Token error')
+
+    def getUploadGoodsStatus3(self):
+        '''token正确，批次id不正确'''
+        getUploadGoodsStatus_data={"token": self.token,"conditions": {"upload_batch_id": 'e'}}
+
+        r=requests.post(url=self.getUploadGoodsStatus_url,headers=self.headers,json=getUploadGoodsStatus_data)
+        print(r.json())
+        self.assertEqual(r.json()['code'],'error')
+        self.assertEqual(r.json()['message'],'未查询到该批次的上传信息，请检查批次ID')
 
 if __name__ == '__main__':
-    GetUploadGoodsStatus().getUploadGoodsStatus1()
+    GetUploadGoodsStatus().getUploadGoodsStatus3()

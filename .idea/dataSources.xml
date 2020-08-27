@@ -7,5 +7,11 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://123.206.135.211:3306/themis</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="themis_goods@123.206.135.211" uuid="341a38d5-e5e2-4f1a-aeb6-921fce1ff5b2">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://123.206.135.211:3306/themis_goods</jdbc-url>
+    </data-source>
   </component>
 </project>
