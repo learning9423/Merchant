@@ -16,15 +16,14 @@ class AbleSale(unittest.TestCase):
                                    user='vvxxthemis',
                                    password='q3YBGG6JxE67xcYY1s0jIyBY4OmKqhg=',
                                    database='themis')
-        self.cur = self.con.cursor()
-        self.cur.execute(self.sql)
-        self.con.commit()
-        return self.cur.fetchall()
+        return  self.con.cursor()
 
     def test_ableSale1(self):
         '''token和商品id都正确'''
-
-        result=self.find_productId()
+        cur=self.find_productId()
+        cur.execute(self.sql)
+        self.con.commit()
+        result=cur.fetchall()
         i=0
         while i<len(result):
             ableSale_data = {'token': self.token, 'goods_list':result[i]}
@@ -49,8 +48,12 @@ class AbleSale(unittest.TestCase):
 
     def test_ableSale3(self):
         '''token错误'''
+        cur=self.find_productId()
+        cur.execute(self.sql)
+        self.con.commit()
+        result=cur.fetchall()
         token = 'e'
-        ableSale_data = {'token': token, 'goods_list': self.find_productId()}
+        ableSale_data = {'token': token, 'goods_list': result[0]}
 
         r = requests.post(url=self.ableSale_url, json=ableSale_data, headers=self.headers)
         print(r.json())
