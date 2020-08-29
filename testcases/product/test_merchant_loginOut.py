@@ -2,6 +2,7 @@ import unittest
 import requests
 
 class LoginOut(unittest.TestCase):
+    '''商家登出'''
     out_url='https://m-t1.vova.com.hk/index.php?q=admin/main/index/logout'
     headers={'Content-Type':'text/html;charset=utf-8','Authorization':'Basic bGViYmF5OnBhc3N3MHJk'}
     def test_login_out(self):
