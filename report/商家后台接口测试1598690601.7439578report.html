@@ -1,0 +1,916 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>商家后台测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2.2"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 80%; }
+table       { font-size: 100%; }
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+output_list = Array();
+/*level 调整增加只显示通过用例的分类 --Findyou
+0:Summary //all hiddenRow
+1:Failed  //pt hiddenRow, ft none
+2:Pass    //pt none, ft hiddenRow
+3:All     //pt none, ft none
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level == 2 || level == 0 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level < 2) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+    }
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+	//console.log(detail_class.length)
+	if (level == 3) {
+		for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="收起"
+		}
+	}
+	else{
+			for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="详细"
+		}
+	}
+}
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+</script>
+<div class='heading'>
+<h1 style="font-family: Microsoft YaHei">商家后台测试报告</h1>
+<p class='attribute'><strong>测试人员 : </strong> 测试李建刚</p>
+<p class='attribute'><strong>开始时间 : </strong> 2020-08-29 16:43:21</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:02:35.672226</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 35，通过 35，通过率= 100.00%</p>
+
+<p class='description'>商家后台测试环境接口测试，本次测试接口为商品模块接口</p>
+</div>
+
+
+<p id='show_detail_line'>
+<a class="btn btn-primary" href='javascript:showCase(0)'>通过率(100.00%)</a>
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败(0)</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过(35)</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有(35)</a>
+</p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 14px;">
+    <td>用例集/测试用例</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>详细</td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>product.test_merchant_ableSale.AbleSale: 商品上架</td>
+    <td class="text-center">3</td>
+    <td class="text-center">3</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',3)" class="detail" id='c1'>详细</a></td>
+</tr>
+
+<tr id='pt1_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_ableSale1: token和商品id都正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1' style='background-color: #696969' >通过</button>
+    <div id='div_pt1_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_1' style='background-color: #696969'>通过</button>
+    <div id='div_pt1_1' class="collapse in">
+    <pre>
+    
+pt1_1: {'execute_status': 'success', 'data': {'code': 20000, 'message': '执行成功'}}
+上架的商品id:1012936
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_ableSale2: 商品id错误</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_2' style='background-color: #696969' >通过</button>
+    <div id='div_pt1_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_2' style='background-color: #696969'>通过</button>
+    <div id='div_pt1_2' class="collapse in">
+    <pre>
+    
+pt1_2: {'execute_status': 'failed', 'data': {'code': 41000, 'message': '没有商品满足操作条件', 'errors_list': [{'code': 41001, 'message': '不存在或无效的商品id', 'goods_list': [124]}]}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_ableSale3: token错误</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_3' style='background-color: #696969' >通过</button>
+    <div id='div_pt1_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_3' style='background-color: #696969'>通过</button>
+    <div id='div_pt1_3' class="collapse in">
+    <pre>
+    
+pt1_3: Token error
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>product.test_merchant_addProductSku.AddProductSku: 新增子sku</td>
+    <td class="text-center">4</td>
+    <td class="text-center">4</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',4)" class="detail" id='c2'>详细</a></td>
+</tr>
+
+<tr id='pt2_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_addProductSku1: token及参数都正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_1' style='background-color: #696969' >通过</button>
+    <div id='div_pt2_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_1' style='background-color: #696969'>通过</button>
+    <div id='div_pt2_1' class="collapse in">
+    <pre>
+    
+pt2_1: {'execute_status': 'success', 'data': {'code': 20000, 'message': '执行成功', 'upload_batch_id': '40214'}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_addProductSku2: 新增sku参数重复</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_2' style='background-color: #696969' >通过</button>
+    <div id='div_pt2_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_2' style='background-color: #696969'>通过</button>
+    <div id='div_pt2_2' class="collapse in">
+    <pre>
+    
+pt2_2: {'execute_status': 'failed', 'data': {'code': 40015, 'message': '上传的商品数据内容已存在, 请不要重复上传相同的商品数据, 成功上传时间: 2020-08-29 08:43:59(UTC), 数据批次: 40214', 'upload_batch_id': '40214'}}
+{'execute_status': 'failed', 'data': {'code': 40015, 'message': '上传的商品数据内容已存在, 请不要重复上传相同的商品数据, 成功上传时间: 2020-08-29 08:43:59(UTC), 数据批次: 40214', 'upload_batch_id': '40214'}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_addProductSku3: token正确，参数为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_3' style='background-color: #696969' >通过</button>
+    <div id='div_pt2_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_3' style='background-color: #696969'>通过</button>
+    <div id='div_pt2_3' class="collapse in">
+    <pre>
+    
+pt2_3: {'execute_status': 'failed', 'data': {'code': 40011, 'message': '没有合格的要上传的商品数据', 'errors_list': [{'item': 'item_0', 'code': 42002, 'message': '错误: 必填属性 parent_sku 不得为空'}], 'warnings_list': []}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_addProductSku4: token不正确，其余参数都正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_4' style='background-color: #696969' >通过</button>
+    <div id='div_pt2_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_4' style='background-color: #696969'>通过</button>
+    <div id='div_pt2_4' class="collapse in">
+    <pre>
+    
+pt2_4: Token error
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>product.test_merchant_disableSale.DisableSale: 商品下架</td>
+    <td class="text-center">5</td>
+    <td class="text-center">5</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c3',5)" class="detail" id='c3'>详细</a></td>
+</tr>
+
+<tr id='pt3_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_disableSale1: 无海外仓直接下架:token和商品id都正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_1' style='background-color: #696969' >通过</button>
+    <div id='div_pt3_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_1' style='background-color: #696969'>通过</button>
+    <div id='div_pt3_1' class="collapse in">
+    <pre>
+    
+pt3_1: {'execute_status': 'success', 'data': {'code': 20000, 'message': '执行成功'}}
+下架的商品id:1012908
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_disableSale2: 无海外仓直接下架:商品id错误</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_2' style='background-color: #696969' >通过</button>
+    <div id='div_pt3_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_2' style='background-color: #696969'>通过</button>
+    <div id='div_pt3_2' class="collapse in">
+    <pre>
+    
+pt3_2: {'execute_status': 'failed', 'data': {'code': 41000, 'message': '没有商品满足操作条件', 'errors_list': [{'code': 41001, 'message': '不存在或无效的商品id', 'goods_list': [124]}]}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_disableSale3: 无海外仓库存直接下架:token错误</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_3' style='background-color: #696969' >通过</button>
+    <div id='div_pt3_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_3' style='background-color: #696969'>通过</button>
+    <div id='div_pt3_3' class="collapse in">
+    <pre>
+    
+pt3_3: Token error
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_disableSale4: 有海外仓库存:直接下架</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_4' style='background-color: #696969' >通过</button>
+    <div id='div_pt3_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_4' style='background-color: #696969'>通过</button>
+    <div id='div_pt3_4' class="collapse in">
+    <pre>
+    
+pt3_4: {'execute_status': 'success', 'data': {'code': 20000, 'message': '执行成功'}}
+下架的商品id:1302482
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_disableSale5: 有海外仓库存:清零标准仓库存不下架</div></td>
+    <td colspan='5' align='center'><span class="label label-success success">通过</span></td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>product.test_merchant_getAddSubSkuStatus.GetAddSubSkuStatus: 获取新增子sku状态</td>
+    <td class="text-center">3</td>
+    <td class="text-center">3</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c4',3)" class="detail" id='c4'>详细</a></td>
+</tr>
+
+<tr id='pt4_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_getAddProductSku1: token与批次id都正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_1' style='background-color: #696969' >通过</button>
+    <div id='div_pt4_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_1' style='background-color: #696969'>通过</button>
+    <div id='div_pt4_1' class="collapse in">
+    <pre>
+    
+pt4_1: {'execute_status': 'partial_success', 'data': {'code': 42203, 'message': '新增子sku正在处理中'}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_getAddProductSku2: token不正确，批次id正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_2' style='background-color: #696969' >通过</button>
+    <div id='div_pt4_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_2' style='background-color: #696969'>通过</button>
+    <div id='div_pt4_2' class="collapse in">
+    <pre>
+    
+pt4_2: Token error
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_getAddProductSku3: token正确，批次id正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_3' style='background-color: #696969' >通过</button>
+    <div id='div_pt4_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_3' style='background-color: #696969'>通过</button>
+    <div id='div_pt4_3' class="collapse in">
+    <pre>
+    
+pt4_3: {'execute_status': 'failed', 'data': {'code': 42201, 'message': '不是新增子sku的批次'}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>product.test_merchant_getProductImgInfo.GetProductImgInfo: 获取商品图片信息</td>
+    <td class="text-center">3</td>
+    <td class="text-center">3</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c5',3)" class="detail" id='c5'>详细</a></td>
+</tr>
+
+<tr id='pt5_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_getProductImgInfo1: token和商品id都正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_1' style='background-color: #696969' >通过</button>
+    <div id='div_pt5_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_1' style='background-color: #696969'>通过</button>
+    <div id='div_pt5_1' class="collapse in">
+    <pre>
+    
+pt5_1: {'product_id': '1012908', 'product_img_info': [{'img_id': '75323', 'img_url': 'http://d2bq6dn4rcskkx.cloudfront.net/image/500_500/filler/09/d2/c18e80fa189144861d3dca1aaa3d09d2.jpg', 'sequence': '1', 'main_img': 'Y', 'goods_sku_list': []}, {'img_id': '75391', 'img_url': 'http://d2bq6dn4rcskkx.cloudfront.net/image/500_500/filler/58/8d/803d09ec5fe58d15093514f75bc5588d.jpg', 'sequence': '3', 'main_img': 'N', 'goods_sku_list': ['02PK849004']}, {'img_id': '75441', 'img_url': 'http://d2bq6dn4rcskkx.cloudfront.net/image/500_500/filler/6f/f1/eeb3666981e16356ac8994700eec6ff1.jpg', 'sequence': '4', 'main_img': 'N', 'goods_sku_list': ['01PK849004']}, {'img_id': '75487', 'img_url': 'http://d2bq6dn4rcskkx.cloudfront.net/image/500_500/filler/45/89/a3a2176cd086dd404a9d84fc3c214589.jpg', 'sequence': '5', 'main_img': 'N', 'goods_sku_list': []}, {'img_id': '75537', 'img_url': 'http://d2bq6dn4rcskkx.cloudfront.net/image/500_500/filler/1b/87/c01f426cd898e20781c0328326f31b87.jpg', 'sequence': '6', 'main_img': 'N', 'goods_sku_list': []}, {'img_id': '75575', 'img_url': 'http://d2bq6dn4rcskkx.cloudfront.net/image/500_500/filler/04/df/40522cc1fb1653ea109775b5d44404df.jpg', 'sequence': '8', 'main_img': 'N', 'goods_sku_list': ['03PK849004', '04PK849004']}, {'img_id': '75615', 'img_url': 'http://d2bq6dn4rcskkx.cloudfront.net/image/500_500/filler/7b/f4/c9053881c716f5c7184e7b3aa2897bf4.jpg', 'sequence': '9', 'main_img': 'N', 'goods_sku_list': []}, {'img_id': '75656', 'img_url': 'http://d2bq6dn4rcskkx.cloudfront.net/image/500_500/filler/e6/76/ea4c2e116b9f2027b1b0e3312d75e676.jpg', 'sequence': '11', 'main_img': 'N', 'goods_sku_list': []}, {'img_id': '75721', 'img_url': 'http://d2bq6dn4rcskkx.cloudfront.net/image/500_500/filler/ca/80/1985d60d45b1b589992d906a47bcca80.jpg', 'sequence': '12', 'main_img': 'N', 'goods_sku_list': []}], 'message': '查询成功'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_getProductImgInfo2: token不正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_2' style='background-color: #696969' >通过</button>
+    <div id='div_pt5_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_2' style='background-color: #696969'>通过</button>
+    <div id='div_pt5_2' class="collapse in">
+    <pre>
+    
+pt5_2: Token error
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_getProductImgInfo3: 商品id为空或错误</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_3' style='background-color: #696969' >通过</button>
+    <div id='div_pt5_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_3' style='background-color: #696969'>通过</button>
+    <div id='div_pt5_3' class="collapse in">
+    <pre>
+    
+pt5_3: {'product_id': '', 'product_img_info': [], 'message': '查询为空'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>product.test_merchant_login.TestLogin: 商家后台登录</td>
+    <td class="text-center">5</td>
+    <td class="text-center">5</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c6',5)" class="detail" id='c6'>详细</a></td>
+</tr>
+
+<tr id='pt6_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login1: 用户名和密码都正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_1' style='background-color: #696969' >通过</button>
+    <div id='div_pt6_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_1' style='background-color: #696969'>通过</button>
+    <div id='div_pt6_1' class="collapse in">
+    <pre>
+    
+pt6_1: {'code': 'SUCCESS', 'msg': '登录成功！', 'isNeedToEmailVerify': False, 'responseUrl': '/index.php?q=admin/main/index/index', 'needToSkip': False, 'needToSkipUrl': ''}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login2: 用户名密码都错误</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_2' style='background-color: #696969' >通过</button>
+    <div id='div_pt6_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_2' style='background-color: #696969'>通过</button>
+    <div id='div_pt6_2' class="collapse in">
+    <pre>
+    
+pt6_2: {'code': 'ERROR', 'msg': '您填写的用户名或密码不匹配', 'isNeedToEmailVerify': False}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login3: 用户名正确密码错误</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_3' style='background-color: #696969' >通过</button>
+    <div id='div_pt6_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_3' style='background-color: #696969'>通过</button>
+    <div id='div_pt6_3' class="collapse in">
+    <pre>
+    
+pt6_3: {'code': 'ERROR', 'msg': '您填写的用户名或密码不匹配', 'isNeedToEmailVerify': False}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login4: 用户名错误密码正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_4' style='background-color: #696969' >通过</button>
+    <div id='div_pt6_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_4' style='background-color: #696969'>通过</button>
+    <div id='div_pt6_4' class="collapse in">
+    <pre>
+    
+pt6_4: {'code': 'ERROR', 'msg': '您填写的用户名或密码不匹配', 'isNeedToEmailVerify': False}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login5: 用户名密码为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_5' style='background-color: #696969' >通过</button>
+    <div id='div_pt6_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_5' style='background-color: #696969'>通过</button>
+    <div id='div_pt6_5' class="collapse in">
+    <pre>
+    
+pt6_5: {'code': 'ERROR', 'msg': '您填写的用户名或密码不匹配', 'isNeedToEmailVerify': False}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>product.test_merchant_loginOut.LoginOut</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c7',1)" class="detail" id='c7'>详细</a></td>
+</tr>
+
+<tr id='pt7_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_out: 商家后台退出</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt7_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_1' style='background-color: #696969' >通过</button>
+    <div id='div_pt7_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt7_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_1' style='background-color: #696969'>通过</button>
+    <div id='div_pt7_1' class="collapse in">
+    <pre>
+    
+pt7_1: 302
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>product.test_merchant_updateRegionShippingFee.UpdateRegionShippingFee: 更新国家运费</td>
+    <td class="text-center">3</td>
+    <td class="text-center">3</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c8',3)" class="detail" id='c8'>详细</a></td>
+</tr>
+
+<tr id='pt8_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_updateRegionShippingFee1: token与运费参数都正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt8_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt8_1' style='background-color: #696969' >通过</button>
+    <div id='div_pt8_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt8_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt8_1' style='background-color: #696969'>通过</button>
+    <div id='div_pt8_1' class="collapse in">
+    <pre>
+    
+pt8_1: {'execute_status': 'success', 'message': '更新国家运费提交成功', 'reference_region': 'https://merchant.vova.com.hk/userfiles/templates/VOVA_国家简称对应表.xlsx'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt8_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_updateRegionShippingFee2: token错误，运费参数正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt8_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt8_2' style='background-color: #696969' >通过</button>
+    <div id='div_pt8_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt8_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt8_2' style='background-color: #696969'>通过</button>
+    <div id='div_pt8_2' class="collapse in">
+    <pre>
+    
+pt8_2: Token error
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt8_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_updateRegionShippingFee3: token正确，运费参数不正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt8_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt8_3' style='background-color: #696969' >通过</button>
+    <div id='div_pt8_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt8_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt8_3' style='background-color: #696969'>通过</button>
+    <div id='div_pt8_3' class="collapse in">
+    <pre>
+    
+pt8_3: {'execute_status': 'failed', 'message': '第[0]组数据parent_sku(e)不存在', 'reference_region': 'https://merchant.vova.com.hk/userfiles/templates/VOVA_国家简称对应表.xlsx'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>product.test_merchant_updateSkuImg.UpdateSkuImg: 更新商品sku图片</td>
+    <td class="text-center">4</td>
+    <td class="text-center">4</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c9',4)" class="detail" id='c9'>详细</a></td>
+</tr>
+
+<tr id='pt9_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_updateSkuImg1: 参数不为空，参数有效</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt9_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt9_1' style='background-color: #696969' >通过</button>
+    <div id='div_pt9_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt9_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt9_1' style='background-color: #696969'>通过</button>
+    <div id='div_pt9_1' class="collapse in">
+    <pre>
+    
+pt9_1: {'execute_status': 'success', 'data': {'code': 20000, 'message': '执行成功'}}
+更新的商品信息为：1012989 [{'goods_sku': '03BE849202', 'img_id': '77646'}]
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt9_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_updateSkuImg2: 克隆商品不能更新图片</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt9_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt9_2' style='background-color: #696969' >通过</button>
+    <div id='div_pt9_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt9_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt9_2' style='background-color: #696969'>通过</button>
+    <div id='div_pt9_2' class="collapse in">
+    <pre>
+    
+pt9_2: {'execute_status': 'failed', 'data': {'code': 41019, 'message': '克隆商品无法更新'}}
+更新的商品信息为：1012906 [{'goods_sku': '03GY849078', 'img_id': '75486'}]
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt9_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_updateSkuImg3: token正确，其余参数为空或无效</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt9_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt9_3' style='background-color: #696969' >通过</button>
+    <div id='div_pt9_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt9_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt9_3' style='background-color: #696969'>通过</button>
+    <div id='div_pt9_3' class="collapse in">
+    <pre>
+    
+pt9_3: {'execute_status': 'failed', 'data': {'code': 40001, 'message': '必需参数数据为空或错误'}}
+{'execute_status': 'failed', 'data': {'code': 50000, 'message': '执行失败，请重新尝试', 'errors_list': [{'item': 'item_0', 'code': 41020, 'msg': '不存在或无效的子sku'}]}}
+{'execute_status': 'failed', 'data': {'code': 50000, 'message': '执行失败，请重新尝试', 'errors_list': [{'item': 'item_0', 'code': 41021, 'msg': '不存在或无效的图片编号'}]}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt9_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_updateSkuImg4: 参数不为空，参数有效</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt9_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt9_4' style='background-color: #696969' >通过</button>
+    <div id='div_pt9_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt9_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt9_4' style='background-color: #696969'>通过</button>
+    <div id='div_pt9_4' class="collapse in">
+    <pre>
+    
+pt9_4: Token error
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>product.test_merchant_uploadSizeChart.UploadSizeChart: 上传商品尺寸信息</td>
+    <td class="text-center">4</td>
+    <td class="text-center">4</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c10',4)" class="detail" id='c10'>详细</a></td>
+</tr>
+
+<tr id='pt10_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_uploadSizeChart1: token与尺寸参数都正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt10_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt10_1' style='background-color: #696969' >通过</button>
+    <div id='div_pt10_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt10_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt10_1' style='background-color: #696969'>通过</button>
+    <div id='div_pt10_1' class="collapse in">
+    <pre>
+    
+pt10_1: {'execute_status': 'success', 'message': '上传尺码数据成功', 'reference': {'size_chart_position': 'https://merchant.vova.com.hk/userfiles/templates/Size_Chart_测量部位表.xlsx', 'size_data_param_reference': [['Size', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'], ['Shoulder', '35', '36', '37', '38', '39', '40', '41'], ['Length', '58', '60', '61', '62', '63', '64', '65']]}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt10_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_uploadSizeChart2: 克隆商品不能修改</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt10_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt10_2' style='background-color: #696969' >通过</button>
+    <div id='div_pt10_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt10_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt10_2' style='background-color: #696969'>通过</button>
+    <div id='div_pt10_2' class="collapse in">
+    <pre>
+    
+pt10_2: {'execute_status': 'failed', 'message': '克隆商品，无法修改 ID :1012906', 'reference': {'size_chart_position': 'https://merchant.vova.com.hk/userfiles/templates/Size_Chart_测量部位表.xlsx', 'size_data_param_reference': [['Size', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'], ['Shoulder', '35', '36', '37', '38', '39', '40', '41'], ['Length', '58', '60', '61', '62', '63', '64', '65']]}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt10_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_uploadSizeChart3: token不正确，尺寸参数正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt10_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt10_3' style='background-color: #696969' >通过</button>
+    <div id='div_pt10_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt10_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt10_3' style='background-color: #696969'>通过</button>
+    <div id='div_pt10_3' class="collapse in">
+    <pre>
+    
+pt10_3: Token error
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt10_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_uploadSizeChart4: token正确，尺寸参数不正确</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt10_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt10_4' style='background-color: #696969' >通过</button>
+    <div id='div_pt10_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt10_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt10_4' style='background-color: #696969'>通过</button>
+    <div id='div_pt10_4' class="collapse in">
+    <pre>
+    
+pt10_4: {'execute_status': 'failed', 'message': '上传的尺码参数第一行第一个值必须是 Size,请参考提示信息修改上传数据', 'reference': {'size_chart_position': 'https://merchant.vova.com.hk/userfiles/templates/Size_Chart_测量部位表.xlsx', 'size_data_param_reference': [['Size', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'], ['Shoulder', '35', '36', '37', '38', '39', '40', '41'], ['Length', '58', '60', '61', '62', '63', '64', '65']]}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='total_row' class="text-center active">
+    <td>总计</td>
+    <td>35</td>
+    <td>35</td>
+    <td>0</td>
+    <td>0</td>
+    <td>通过率：100.00%</td>
+</tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    
+</body>
+</html>

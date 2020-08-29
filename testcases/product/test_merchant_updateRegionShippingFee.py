@@ -4,6 +4,7 @@ from pip._vendor import requests
 from retrying import retry
 
 class UpdateRegionShippingFee(unittest.TestCase):
+    '''更新国家运费'''
     updateRegionShippingFee_url='https://m-t1.vova.com.hk/api/v1/product/updateRegionShippingFee'
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}
     sql="select old_goods_id from goods where merchant_id='13' and is_on_sale='1' and is_delete='0'"

@@ -6,6 +6,7 @@ from retrying import retry
 
 
 class GetProductImgInfo(unittest.TestCase):
+    '''获取商品图片信息'''
     sql = "select vg.virtual_goods_id from virtual_goods vg inner join goods g on g.goods_id=vg.goods_id where g.is_on_sale='0' and g.merchant_id='13' and g.is_delete='0';"
     getProductImgInfo_url = 'https://m-t1.vova.com.hk/api/v1/product/getProductImgInfo'
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}

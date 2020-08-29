@@ -5,6 +5,7 @@ from retrying import retry
 
 
 class AbleSale(unittest.TestCase):
+    '''商品上架'''
     sql = "select vg.virtual_goods_id from virtual_goods vg inner join goods g on g.goods_id=vg.goods_id where g.is_on_sale='0' and g.merchant_id='13' and g.is_delete='0';"
     ableSale_url = 'https://m-t1.vova.com.hk/api/v1/product/enableSale'
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}

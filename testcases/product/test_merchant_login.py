@@ -2,6 +2,7 @@ import requests
 import unittest
 
 class TestLogin(unittest.TestCase):
+    '''商家后台登录'''
     login_url='https://m-t1.vova.com.hk/index.php?q=admin/main/index/login'
     headers={'Content-Type':'application/x-www-form-urlencoded','Authorization':'Basic bGViYmF5OnBhc3N3MHJk'}
 

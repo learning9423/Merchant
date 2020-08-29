@@ -6,6 +6,7 @@ from retrying import retry
 
 
 class UploadSizeChart(unittest.TestCase):
+    '''上传商品尺寸信息'''
     uploadSizeChart_url='https://m-t1.vova.com.hk/api/v1/product/uploadSizeChart'
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}
     sql1="select vg.virtual_goods_id from virtual_goods vg inner join goods g on g.goods_id=vg.goods_id where g.goods_sn like 'SN%' and g.merchant_id='13' and g.is_delete='0';"

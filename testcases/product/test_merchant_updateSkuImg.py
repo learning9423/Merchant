@@ -5,6 +5,7 @@ from retrying import retry
 
 
 class UpdateSkuImg(unittest.TestCase):
+    '''更新商品sku图片'''
     updateSkuImg_url='https://m-t1.vova.com.hk/api/v1/product/updateSkuImg'
     headers={'Content-Type':'application/x-www-form-urlencoded','Authorization':'Basic bGViYmF5OnBhc3N3MHJk'}
     token ='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo'

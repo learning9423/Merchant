@@ -5,7 +5,8 @@ from retrying import retry
 
 
 class DisableSale(unittest.TestCase):
-    sql1 = "select vg.virtual_goods_id from virtual_goods vg inner join goods g on g.goods_id=vg.goods_id where g.is_on_sale='1' and g.merchant_id='26420' and sale_status='normal' and is_delete='0' ;"
+    '''商品下架'''
+    sql1 = "select vg.virtual_goods_id from virtual_goods vg inner join goods g on g.goods_id=vg.goods_id where g.is_on_sale='1' and g.merchant_id='13' and sale_status='normal' and is_delete='0' ;"
     sql2 = "select vg.virtual_goods_id from fbv_sku_warehouse_storage fsws inner join goods_sku gs on gs.sku_id = fsws.sku_id inner join goods g on g.goods_id = gs.goods_id inner join virtual_goods vg on vg.goods_id=g.goods_id where fsws.fbv_warehouse_storage!=0 and g.is_on_sale='1' and g.merchant_id ='13' and g.sale_status='normal';"
     disableSale_url = 'https://m-t1.vova.com.hk/api/v1/product/disableSale'
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}
@@ -55,11 +56,9 @@ class DisableSale(unittest.TestCase):
         result=cur.fetchall()
         token = 'e'
         disableSale_data = {'token': token, 'goods_list': result[0]}
-
         r = requests.post(url=self.disableSale_url, json=disableSale_data, headers=self.headers)
         print(r.json())
         self.assertEqual(r.text, '"Token error"')
-        self.assertEqual(r.status_code, 401)
 
     def test_disableSale4(self):
         '''有海外仓库存:直接下架'''
@@ -101,4 +100,4 @@ class DisableSale(unittest.TestCase):
                 break
 
 if __name__ == '__main__':
-    DisableSale().test_disableSale1()
+    DisableSale().test_disableSale3()
