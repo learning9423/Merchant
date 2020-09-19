@@ -1,3 +1,5 @@
+import json
+
 import xlrd
 
 
@@ -23,4 +25,6 @@ class ReadExcel():
 
 
 if __name__ == '__main__':
-    print(ReadExcel().readExcel(r'../data/login_api.xlsx','Sheet1'))
+    data=ReadExcel().readExcel(r'../data/ableSale&enableSale_api.xlsx','Sheet1')
+    print(data)
+    print(eval(data[0]['body'])['goods_list'])

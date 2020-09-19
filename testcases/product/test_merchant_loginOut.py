@@ -1,15 +1,25 @@
 import unittest
 import requests
 
+from common.read_excel import ReadExcel
+from common.send_request import SendRequest
+
+
 class LoginOut(unittest.TestCase):
     '''商家登出'''
-    out_url='https://m-t1.vova.com.hk/index.php?q=admin/main/index/logout'
-    headers={'Content-Type':'text/html;charset=utf-8','Authorization':'Basic bGViYmF5OnBhc3N3MHJk'}
+    def __init__(self):
+        #数据初始化
+        self.loginOut_data=ReadExcel().readExcel(r'../data/login_api.xlsx','Sheet2')
+        self.s=requests.session()
+        self._type_equality_funcs={}
+        
     def test_login_out(self):
         '''商家后台退出'''
-        r=requests.get(url=self.out_url,headers=self.headers,allow_redirects=False)
-        self.assertEqual(r.status_code,302)
-        print(r.status_code)
+        r=SendRequest.sendRequest(self.s,self.loginOut_data[0])
+        expect_result=self.loginOut_data[0]['expect_result'].split(":")
+
+        self.assertEqual(r.url,eval(expect_result[1]+':'+expect_result[2]),msg=r.url)
+
 
 if __name__ == '__main__':
     LoginOut().test_login_out()

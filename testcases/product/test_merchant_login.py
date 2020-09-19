@@ -8,8 +8,11 @@ from common.send_request import SendRequest
 
 class TestLogin(unittest.TestCase):
     '''商家后台登录'''
-    login_data = ReadExcel().readExcel(r'../data/login_api.xlsx', 'Sheet1')
-    s = requests.session()
+    def __init__(self):
+        # 数据初始化
+        self.login_data = ReadExcel().readExcel(r'../data/login_api.xlsx', 'Sheet1')
+        self.s = requests.session()
+        self._type_equality_funcs={}
 
     def test_login1(self):
         '''用户名和密码都正确'''
@@ -58,4 +61,4 @@ class TestLogin(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    TestLogin().test_login3()
+    TestLogin().test_login1()

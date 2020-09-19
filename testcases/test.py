@@ -41,9 +41,6 @@ def test1():
     return r.json()['data']['code']
 
 if __name__ == '__main__':
-    for i in range(1,500):
-        result=test1()
-        time.sleep(5)
-        if result==42042:
-            print(i)
-            break
+    s='e'
+    s = s.replace('e','E')
+    print(s)

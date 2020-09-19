@@ -5,7 +5,7 @@ from pip._vendor import requests
 
 class SendRequest():
     '''请求模板'''
-    def sendRequest(s,api_data):
+    def sendRequest(s, api_data):
 
         method=api_data['method']
         url=api_data['url']
@@ -22,6 +22,7 @@ class SendRequest():
             body=None
         else:
             body=eval(api_data['body'])
+
 
         #参数请求
         r=s.request(url=url,method=method,headers=header,params=par,data=body)
