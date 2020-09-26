@@ -5,9 +5,9 @@ from pip._vendor import requests
 
 
 def test1():
-    url = "https://merchant-p.vova.com.hk/api/v1/product/uploadGoods"
+    url = "https://merchant.vova.com.hk/api/v1/product/uploadGoods"
     headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}
-    token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NzgwNjE4NzUsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMTk1NjMiLCJ1TmFtZSI6IjExMTExMTExMTEifQ.JxKFeG4irZBEt4ERTCKRX8Djvp_TDDkFgoqCKM5D_dE'
+    token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTc4MTgxNjIsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMTMiLCJ1TmFtZSI6InRlc3QifQ.ojD-GOE1eBH_pEqBwhBOuHlbfgpmnE1VljoR9bSRDNg'
 
     data = {
         "token": token,
@@ -38,9 +38,8 @@ def test1():
 
     r=requests.post(url=url,headers=headers,json=data)
     print(r.json())
-    return r.json()['data']['code']
 
 if __name__ == '__main__':
-    s='e'
-    s = s.replace('e','E')
-    print(s)
+        for i in range(6):
+            time.sleep(10)
+            test1()

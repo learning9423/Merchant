@@ -21,7 +21,7 @@ class SendRequest():
         if api_data['body']=='':
             body=None
         else:
-            body=eval(api_data['body'])
+            body=api_data['body']
 
 
         #参数请求
