@@ -13,7 +13,7 @@ def test1():
         "token": token,
         "items": [{
             "cat_id": "5872",
-            "parent_sku": "w1"+str(random.randint(0,100000)),
+            "parent_sku": "w1" + str(random.randint(0, 100000)),
             "goods_sku": "tt",
             "goods_name": "avg",
             "storage": 12,
@@ -34,12 +34,12 @@ def test1():
 
         }],
         "ignore_warning": "1"
-        }
+    }
 
-    r=requests.post(url=url,headers=headers,json=data)
+    r = requests.post(url=url, headers=headers, json=data)
     print(r.json())
 
+
 if __name__ == '__main__':
-        for i in range(6):
-            time.sleep(10)
-            test1()
+    t = 'strign'
+    print(t.replace('strign', 'nice'))

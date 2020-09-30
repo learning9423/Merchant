@@ -17,12 +17,10 @@ class SqlData():
         cur=con.cursor()
         cur.execute(sql)
         con.commit()
-        return cur.fetchone()
+        return cur.fetchall()   #返回查询数据
 
 if __name__ == '__main__':
     data=ReadExcel.readExcel(r'../data/ableSale&enableSale_api.xlsx','Sheet1')
     data_sql=data[0]['sql']
-    print(data_sql)
-    print(type(data_sql))
     find=SqlData.themis_data(data_sql)
     print(find)
