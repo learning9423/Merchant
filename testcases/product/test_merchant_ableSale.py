@@ -37,7 +37,7 @@ class AbleSale(unittest.TestCase):
         r=SendRequest.sendRequest(self.s,self.ableSale_data[1])
         expect_result=self.ableSale_data[1]['expect_result'].split(":")[1]
         msg=self.ableSale_data[1]['msg'].split(":")[1]
-
+        print(r.json())
         self.assertEqual(r.json()['execute_status'],eval(expect_result),msg=r.json())
         self.assertEqual(r.json()['data']['errors_list'][0]['code'], eval(msg),msg=r.json())
 
@@ -49,4 +49,4 @@ class AbleSale(unittest.TestCase):
         self.assertEqual(r.json(), eval(expect_result),msg=r.json())
 
 if __name__ == '__main__':
-    AbleSale().test_ableSale3()
+    AbleSale().test_ableSale1()
