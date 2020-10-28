@@ -13,7 +13,7 @@ class AbleSale(unittest.TestCase):
         # 数据初始化
         self.ableSale_data = ReadExcel().readExcel(r'../data/ableSale&enableSale_api.xlsx', 'Sheet1')
         for i in range(len(self.ableSale_data)):
-            if self.ableSale_data[i]['sql']!='':
+            if self.ableSale_data[i]['sql']!='' and '{virtual_goods_id}' in self.disableSale_data[i]['body']:
                 a=SqlData.themis_data(self.ableSale_data[i]['sql'])
                 self.ableSale_data[i]['body']=self.ableSale_data[i]['body'].replace('{virtual_goods_id}',''.join('%s' %id for id in a[i]))
             else:

@@ -2,41 +2,30 @@ import random
 import unittest
 from pip._vendor import requests
 
+from common.read_excel import ReadExcel
+from common.send_request import SendRequest
 
 
 class AddProductSku(unittest.TestCase):
     '''新增子sku'''
-    sql = "select vg.virtual_goods_id from virtual_goods vg inner join goods g on g.goods_id=vg.goods_id where g.is_on_sale='0' and g.merchant_id='13' and g.is_delete='0';"
-    addProductSku_url = 'https://m-t1.vova.com.hk/api/v1/product/addProductSku'
-    headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}
-    token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo'
-    addProductSku_data = {
-            "token": token,
-            "items": [
-                {
-                    "parent_sku": "5673422g3ff",
-                    "goods_sku": "w1"+str(random.randint(0,10000)),
-                    "storage": 100,
-                    "market_price": 11,
-                    "shop_price": 12,
-                    "shipping_fee": 4,
-                    "style_array": {
-                        "size": "125kg",
-                        "color": "red",
-                        "style_quantity": "600"+str(random.randint(0,10000))
-                    },
-                    "sku_image": "http://img.gaoxiaogif.com/d/file/201908/8ae30f4f63595bd2db1bf0a21333979a.gif"
-                }
-            ]
-        }
+    def __init__(self):
+        self.addProductSku_data=ReadExcel().readExcel(r'../data/addProductSku_api.xlsx','Sheet1')
+        for i in range(len(self.addProductSku_data)):
+            if '{goods_sku}' not in self.addProductSku_data[i]['body']:
+                self.addProductSku_data[i]['body']=self.addProductSku_data[i]['body'].replace('{goods_sku}','t'+str(random(10000)))
+                self.addProductSku_data[i]['body']=self.addProductSku_data[i]['body'].replace('{style_quantity}',str(random(10000)))
+            else:
+                continue
+        self.s = requests.session()
+        self._type_equality_funcs={}
 
     def test_addProductSku1(self):
         '''token及参数都正确'''
-        r=requests.post(url=self.addProductSku_url,headers=self.headers,json=self.addProductSku_data)
-        print(r.json())
-        return self.addProductSku_data
-        self.assertEqual(r.json()['execute_status'], 'success')
-        self.assertEqual(r.json()['data']['message'], '执行成功')
+        r=SendRequest.sendRequest(self.addProductSku_data,self.s)
+        expect_result=self.ableSale_data[0]['expect_result'].split(":")[1]
+        msg=self.ableSale_data[0]['msg'].split(":")[1]
+        self.assertEqual(r.json()['execute_status'], eval(expect_result),msg=r.json())
+        self.assertEqual(r.json()['data']['message'], msg=r.json())
 
     def test_addProductSku2(self):
         '''新增sku参数重复'''
@@ -62,5 +51,5 @@ class AddProductSku(unittest.TestCase):
         print(r.json())
         self.assertEqual(r.json(), 'Token error')
 if __name__ == '__main__':
-    AddProductSku().test_addProductSku3()
+    AddProductSku().test_addProductSku1()
 

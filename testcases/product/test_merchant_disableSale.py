@@ -12,7 +12,7 @@ class DisableSale(unittest.TestCase):
         self.disableSale_data = ReadExcel().readExcel(r'../data/ableSale&enableSale_api.xlsx', 'Sheet2')
         try:
             for i in range(len(self.disableSale_data)):
-                if self.disableSale_data[i]['sql']!='':
+                if self.disableSale_data[i]['sql']!='' and '{virtual_goods_id}' in self.disableSale_data[i]['body']:
                     a=SqlData.themis_data(self.disableSale_data[i]['sql'])#连接数据库，返回数组，sql有可能不同
                     self.disableSale_data[i]['body']=self.disableSale_data[i]['body'].replace('{virtual_goods_id}',''.join('%s' %id for id in a[i]))
                 elif self.disableSale_data[i]=='':
@@ -55,16 +55,13 @@ class DisableSale(unittest.TestCase):
         msg=self.disableSale_data[3]['msg'].split(":")[1]
 
         self.assertEqual(r.json()['execute_status'],eval(expect_result),msg=r.json())
-        self.assertEqual(r.json()['data']['code'],eval(msg),msg=r.json())
-
+        self.assertEqual(r.json()['data']['errors_list'][0]['code'], eval(msg),msg=r.json())
     def test_disableSale5(self):
         '''无海外仓库存直接下架:token错误'''
         r=SendRequest.sendRequest(self.s,self.disableSale_data[4])
         expect_result=self.disableSale_data[4]['expect_result'].split(":")[1]
-        msg=self.disableSale_data[4]['msg'].split(":")[1]
 
-        self.assertEqual(r.json()['execute_status'],eval(expect_result),msg=r.json())
-        self.assertEqual(r.json()['data']['code'],eval(msg),msg=r.json())
+        self.assertEqual(r.json(), eval(expect_result),msg=r.json())
 
 if __name__ == '__main__':
     DisableSale().test_disableSale2()
