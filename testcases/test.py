@@ -43,3 +43,6 @@ def test1():
 if __name__ == '__main__':
     t = 'strign'
     print(t.replace('strign', 'nice'))
+
+
+
