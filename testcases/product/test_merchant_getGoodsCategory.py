@@ -1,12 +1,14 @@
 import unittest
 from pip._vendor import requests
 
+from common.read_excel import ReadExcel
+
 
 class GetGoodsCategory(unittest.TestCase):
     '''获取最新分类id信息'''
-    getGoodsCategory_url = 'https://m-t1.vova.com.hk/api/v1/product/getGoodsCategory'
-    headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}
-    token ='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo'
+    def __init__(self):
+        self.getGoodsCategory_data=ReadExcel().readExcel(r'../../data/getGoodsCategory_api.xlsx','Sheet1')
+        print(self.getGoodsCategory_data)
 
     def test_getGoodsCategory1(self):
         '''token正确'''
@@ -26,4 +28,4 @@ class GetGoodsCategory(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    GetGoodsCategory().test_getGoodsCategory1()
+    GetGoodsCategory().__init__()

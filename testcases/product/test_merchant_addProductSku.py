@@ -18,44 +18,44 @@ class AddProductSku(unittest.TestCase):
                 self.addProductSku_data[i]['body']=self.addProductSku_data[i]['body'].replace('{goods_sku}','r'+str(random.randint(1,10000)))
             elif '{style_quantity}' in self.addProductSku_data[i]['body']:
                 self.addProductSku_data[i]['body']=self.addProductSku_data[i]['body'].replace('{style_quantity}',random.randint(1,10000))
+            else:
+                continue
         self.s=requests.session()
         self._type_equality_funcs={}
 
     def test_addProductSku1(self):
         '''token及参数都正确'''
         r=SendRequest.sendRequest(self.s,self.addProductSku_data[0])
-        print(r.json())
-        # expect_result=self.addProductSku_data[0]['expect_result'].split(":")[1]
-        # msg=self.addProductSku_data[0]['msg'].split(":")[1]
-        # self.assertEqual(r.json()['execute_status'], eval(expect_result),msg=r.json())
-        # self.assertEqual(r.json()['data']['message'], msg=r.json())
-
+        expect_result=self.addProductSku_data[0]['expect_result'].split(":")[1]
+        msg=self.addProductSku_data[0]['msg'].split(":")[1]
+        self.assertEqual(r.json()['execute_status'], eval(expect_result),msg=r.json())
+        self.assertEqual(r.json()['data']['message'], eval(msg),msg=r.json())
+        return self.addProductSku_data[0]
     def test_addProductSku2(self):
         '''新增sku参数重复'''
-        r=requests.post(url=self.addProductSku_url,headers=self.headers,json=self.test_addProductSku1())
-        print(r.json())
-        self.assertEqual(r.json()['execute_status'], 'failed')
-        self.assertEqual(r.json()['data']['code'], 40015)
+        r=SendRequest.sendRequest(self.s,self.test_addProductSku1())
+        expect_result=self.addProductSku_data[1]['expect_result'].split(":")[1]
+        msg=self.addProductSku_data[1]['msg'].split(":")[1]
+        self.assertEqual(r.json()['execute_status'], eval(expect_result),msg=r.json())
+        self.assertEqual(r.json()['data']['code'], eval(msg),msg=r.json())
 
     def test_addProductSku3(self):
         '''token正确，参数为空'''
-        self.addProductSku_data['items'][0]['parent_sku']=''
-        r=requests.post(url=self.addProductSku_url,headers=self.headers,json=self.addProductSku_data)
-        print(r.json())
-        self.assertEqual(r.json()['execute_status'], 'failed')
-        self.assertEqual(r.json()['data']['errors_list'][0]['message'], '错误: 必填属性 parent_sku 不得为空')
+        r=SendRequest.sendRequest(self.s,self.addProductSku_data[2])
+        expect_result=self.addProductSku_data[2]['expect_result'].split(":")[1]
+        msg=self.addProductSku_data[2]['msg'].split(":")[1]+':'+self.addProductSku_data[2]['msg'].split(":")[2]
+        self.assertEqual(r.json()['execute_status'], eval(expect_result),msg=r.json())
+        self.assertEqual(r.json()['data']['errors_list'][0]['message'], eval(msg),msg=r.json())
 
 
     def test_addProductSku4(self):
         '''token不正确，其余参数都正确'''
-        self.addProductSku_data['token']='e'
-        self.addProductSku_data['items'][0]['parent_sku']='5673422g3ff'
-        r=requests.post(url=self.addProductSku_url,headers=self.headers,json=self.addProductSku_data)
-        print(r.json())
-        self.assertEqual(r.json(), 'Token error')
+        r=SendRequest.sendRequest(self.s,self.addProductSku_data[3])
+        expect_result=self.addProductSku_data[3]['expect_result'].split(":")[1]
+        self.assertEqual(r.json(), eval(expect_result),msg=r.json())
 
 if __name__ == '__main__':
-    AddProductSku().test_addProductSku1()
+    AddProductSku().test_addProductSku4()
 
 
 

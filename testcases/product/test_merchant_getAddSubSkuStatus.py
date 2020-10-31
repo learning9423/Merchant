@@ -3,18 +3,28 @@ import unittest
 
 import requests
 
+from common.read_excel import ReadExcel
+from common.send_request import SendRequest
+
 
 class GetAddSubSkuStatus(unittest.TestCase):
     '''获取新增子sku状态'''
-    getAddProductSku_url='https://m-t1.vova.com.hk/api/v1/product/getAddSubSkuStatus'
-    token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo'
-    headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}
-    def setUp(self):
+    def __init__(self):
+        self.getAddProductSku_data=ReadExcel().readExcel(r'../../data/getAddProductSku_api.xlsx','Sheet1')
+        for i in range(len(self.getAddProductSku_data)):
+            if '{upload_batch_id}' in self.getAddProductSku_data[i]['body']:
+                self.getAddProductSku_data[i]['body']=self.getAddProductSku_data[i]['body'].replace('{upload_batch_id}',self.get_upload_batch_id())
+            else:
+                continue
+        self.s=requests.session()
+        self._type_equality_funcs={}
+
+    def get_upload_batch_id(self):
         '''获取新增子sku的批次id'''
         addProductSku_url = 'https://m-t1.vova.com.hk/api/v1/product/addProductSku'
         headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}
         addProductSku_data = {
-            "token": self.token,
+            "token": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo',
             "items": [
                 {
                     "parent_sku": "5673422g3ff",
@@ -37,28 +47,27 @@ class GetAddSubSkuStatus(unittest.TestCase):
 
     def test_getAddProductSku1(self):
         '''token与批次id都正确'''
-        data={'token':self.token,'conditions':{'upload_batch_id':self.setUp()}}
-        r=requests.post(url=self.getAddProductSku_url,headers=self.headers,json=data)
-        print(r.json())
+        r=SendRequest.sendRequest(self.s,self.getAddProductSku_data[0])
+        expect_result1=self.getAddProductSku_data[0]['expect_result'].split(":")[1]
+        expect_result2=self.getAddProductSku_data[0]['expect_result'].split(":")[2]
         if r.json()['execute_status']=='partial_success':
-            self.assertEqual(r.json()['execute_status'],'partial_success')
+            self.assertEqual(r.json()['execute_status'],eval(expect_result1),msg=r.json())
         else:
-            self.assertEqual(r.json()['execute_status'],'success')
+            self.assertEqual(r.json()['execute_status'],eval(expect_result2),msg=r.json())
 
     def test_getAddProductSku2(self):
         '''token不正确，批次id正确'''
-        data={'token':'e','conditions':{'upload_batch_id':self.setUp()}}
-        r=requests.post(url=self.getAddProductSku_url,headers=self.headers,json=data)
-        print(r.json())
-        self.assertEqual(r.json(),'Token error')
+        r=SendRequest.sendRequest(self.s,self.getAddProductSku_data[1])
+        expect_result=self.getAddProductSku_data[1]['expect_result'].split(":")[1]
+        self.assertEqual(r.json(),eval(expect_result),msg=r.json())
 
     def test_getAddProductSku3(self):
         '''token正确，批次id正确'''
-        data={'token':self.token,'conditions':{'upload_batch_id':'3'}}
-        r=requests.post(url=self.getAddProductSku_url,headers=self.headers,json=data)
-        print(r.json())
-        self.assertEqual(r.json()['execute_status'],'failed')
-        self.assertEqual(r.json()['data']['message'],'不是新增子sku的批次')
+        r=SendRequest.sendRequest(self.s,self.getAddProductSku_data[2])
+        expect_result=self.getAddProductSku_data[2]['expect_result'].split(":")[1]
+        msg=self.getAddProductSku_data[2]['msg'].split(":")[1]
 
+        self.assertEqual(r.json()['execute_status'],eval(expect_result),msg=r.json())
+        self.assertEqual(r.json()['data']['message'],eval(msg),msg=r.json())
 if __name__ == '__main__':
     GetAddSubSkuStatus().test_getAddProductSku3()

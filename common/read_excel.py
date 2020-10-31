@@ -24,6 +24,6 @@ class ReadExcel():
 
 
 if __name__ == '__main__':
-    data=ReadExcel().readExcel(r'../data/addProductSku_api.xlsx','Sheet1')
-    print(data)
+    data=ReadExcel().readExcel(r'../data/getGoodsCategory_api.xlsx','Sheet1')
+    # print(data)
 
