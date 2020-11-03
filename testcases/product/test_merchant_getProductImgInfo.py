@@ -1,46 +1,43 @@
 import unittest
-
-import pymysql
 from pip._vendor import requests
-from retrying import retry
 
+from common.read_excel import ReadExcel
+from common.send_request import SendRequest
+from common.sql_data import SqlData
 
 class GetProductImgInfo(unittest.TestCase):
     '''获取商品图片信息'''
-    sql = "select vg.virtual_goods_id from virtual_goods vg inner join goods g on g.goods_id=vg.goods_id where g.is_on_sale='0' and g.merchant_id='13' and g.is_delete='0';"
-    getProductImgInfo_url = 'https://m-t1.vova.com.hk/api/v1/product/getProductImgInfo'
-    headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}
-    token ='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo'
-    @retry(stop_max_attempt_number=5,wait_random_max=1000)
-    def find_productData(self):
-        self.con = pymysql.Connect(host='123.206.135.211',
-                                   port=3306,
-                                   user='vvxxthemis',
-                                   password='q3YBGG6JxE67xcYY1s0jIyBY4OmKqhg=',
-                                   database='themis')
-        self.cur = self.con.cursor()
-        self.cur.execute(self.sql)
-        self.con.commit()
-        return self.cur.fetchone()
-
+    def __init__(self):
+        self.getProductImgInfo_data=ReadExcel().readExcel(r'../../data/getProductImgInfo_api.xlsx','Sheet1')
+        print(self.getProductImgInfo_data)
+        for i in range(len(self.getProductImgInfo_data)):
+            if self.getProductImgInfo_data[i]['sql']!='' and '{virtual_goods_id}' in self.getProductImgInfo_data[i]['params']:
+                a=SqlData.themis_data(self.getProductImgInfo_data[i]['sql'])
+                self.getProductImgInfo_data[i]['params']=self.getProductImgInfo_data[i]['params'].replace('{virtual_goods_id}',''.join('%s' %id for id in a[i]))
+            else:
+                continue
+        self.s = requests.session()
+        self._type_equality_funcs={}
     def test_getProductImgInfo1(self):
         '''token和商品id都正确'''
-        result=self.find_productData()
-        getProductImgInfo_data={'token':self.token,'product_id':result[0]}
-
-        r=requests.get(url=self.getProductImgInfo_url,headers=self.headers,params=getProductImgInfo_data)
+        r=SendRequest.sendRequest(self.s,self.getProductImgInfo_data[0])
+        print(self.getProductImgInfo_data[0])
         print(r.json())
-        self.assertEqual(r.json()['product_id'],str(getProductImgInfo_data['product_id']))
+        # expect_result=self.getProductImgInfo_data[0]['expect_result'].split(":")[1]
+        # msg=self.getProductImgInfo_data[0]['msg'].split(":")[1]
+        #
+        # self.assertEqual(r.json()['execute_status'],eval(expect_result),msg=r.json())
+        # self.assertEqual(r.json()['data']['code'],eval(msg),msg=r.json())
+
 
     def test_getProductImgInfo2(self):
         '''token不正确'''
-        result=self.find_productData()
-        token ='e'
-        getProductImgInfo_data={'token':token,'product_id':result[0]}
+        r=SendRequest.sendRequest(self.s,self.getProductImgInfo_data[1])
+        expect_result=self.getProductImgInfo_data[1]['expect_result'].split(":")[1]
+        msg=self.getProductImgInfo_data[1]['msg'].split(":")[1]
 
-        r=requests.get(url=self.getProductImgInfo_url,headers=self.headers,params=getProductImgInfo_data)
-        print(r.json())
-        self.assertEqual(r.json(),'Token error')
+        self.assertEqual(r.json()['execute_status'],eval(expect_result),msg=r.json())
+        self.assertEqual(r.json()['data']['code'],eval(msg),msg=r.json())
 
     def test_getProductImgInfo3(self):
         '''商品id为空或错误'''
@@ -53,4 +50,4 @@ class GetProductImgInfo(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    GetProductImgInfo().test_getProductImgInfo2()
+    GetProductImgInfo().test_getProductImgInfo1()

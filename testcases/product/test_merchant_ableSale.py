@@ -25,7 +25,6 @@ class AbleSale(unittest.TestCase):
         '''token和商品id都正确'''
 
         r=SendRequest.sendRequest(self.s,self.ableSale_data[0])
-        print(self.ableSale_data[0])
         expect_result=self.ableSale_data[0]['expect_result'].split(":")[1]
         msg=self.ableSale_data[0]['msg'].split(":")[1]
 
