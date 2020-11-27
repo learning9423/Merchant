@@ -19,14 +19,12 @@ class TestLogin(unittest.TestCase):
         r = SendRequest.sendRequest(self.s, self.login_data[0])
         expect_result=self.login_data[0]['expect_result'].split(":")[1]
         msg=self.login_data[0]['msg']
-        print(r.json())
         self.assertEqual(r.json()['code'], eval(expect_result), msg=r.json())
         self.assertEqual(r.json()['msg'], msg, msg=r.json())
 
     def test_login2(self):
         '''用户名密码都错误'''
         r = SendRequest.sendRequest(self.s, self.login_data[1])
-        print(r.json())
         expect_result=self.login_data[1]['expect_result'].split(":")[1]
         msg=self.login_data[1]['msg']
 
