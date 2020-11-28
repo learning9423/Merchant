@@ -10,7 +10,7 @@ class GetUploadGoodsStatus(unittest.TestCase):
     def __init__(self,methodName='runTest'):
         # 数据初始化
         super(GetUploadGoodsStatus,self).__init__(methodName)
-        self.getUploadGoodsStatus_data=ReadExcel().readExcel(r'../../data/getUploadGoodsStatus_api.xlsx','Sheet1')
+        self.getUploadGoodsStatus_data=ReadExcel().readExcel(r'../data/getUploadGoodsStatus_api.xlsx','Sheet1')
         for i in range(len(self.getUploadGoodsStatus_data)):
             if '{upload_batch_id}' in self.getUploadGoodsStatus_data[i]['body']:
                  self.getUploadGoodsStatus_data[i]['body']= self.getUploadGoodsStatus_data[i]['body'].replace('{upload_batch_id}',str(self.get_upload_batch_id()))

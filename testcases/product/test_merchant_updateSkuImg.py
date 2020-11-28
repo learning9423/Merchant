@@ -11,7 +11,7 @@ class UpdateSkuImg(unittest.TestCase):
     def __init__(self,methodName='runTest'):
         # 数据初始化
         super(UpdateSkuImg,self).__init__(methodName)
-        self.updateSkuImg_data=ReadExcel().readExcel(r'../../data/updateSkuImg_api.xlsx','Sheet1')
+        self.updateSkuImg_data=ReadExcel().readExcel(r'../data/updateSkuImg_api.xlsx','Sheet1')
         for i in range(len(self.updateSkuImg_data)):
             if self.updateSkuImg_data[i]['sql']!='':
                 a = SqlData.themis_data(self.updateSkuImg_data[i]['sql'])
