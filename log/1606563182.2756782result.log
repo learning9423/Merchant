@@ -1,0 +1,7 @@
+Sat, 28 Nov 2020 19:33:02 test_suite.py[line:25] DEBUG <unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[]>, <unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<product.test_merchant_ableSale.AbleSale testMethod=test_ableSale1>, <product.test_merchant_ableSale.AbleSale testMethod=test_ableSale2>, <product.test_merchant_ableSale.AbleSale testMethod=test_ableSale3>]>]>]>
+Sat, 28 Nov 2020 19:33:05 connectionpool.py[line:955] DEBUG Starting new HTTPS connection (1): m-t1.vova.com.hk:443
+Sat, 28 Nov 2020 19:33:05 connectionpool.py[line:428] DEBUG https://m-t1.vova.com.hk:443 "POST /api/v1/product/enableSale HTTP/1.1" 200 None
+Sat, 28 Nov 2020 19:33:07 connectionpool.py[line:955] DEBUG Starting new HTTPS connection (1): m-t1.vova.com.hk:443
+Sat, 28 Nov 2020 19:33:08 connectionpool.py[line:428] DEBUG https://m-t1.vova.com.hk:443 "POST /api/v1/product/enableSale HTTP/1.1" 200 None
+Sat, 28 Nov 2020 19:33:10 connectionpool.py[line:955] DEBUG Starting new HTTPS connection (1): m-t1.vova.com.hk:443
+Sat, 28 Nov 2020 19:33:10 connectionpool.py[line:428] DEBUG https://m-t1.vova.com.hk:443 "POST /api/v1/product/enableSale HTTP/1.1" 401 None

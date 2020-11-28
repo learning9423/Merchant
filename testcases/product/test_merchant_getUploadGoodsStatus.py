@@ -1,21 +1,31 @@
 import random
 import unittest
-
 from pip._vendor import requests
+from common.read_excel import ReadExcel
+from common.send_request import SendRequest
 
 
 class GetUploadGoodsStatus(unittest.TestCase):
     '''获取商品上传状态'''
-    getUploadGoodsStatus_url="https://m-t1.vova.com.hk/api/v1/product/getUploadGoodsStatus"
-    headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}
-    token ='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo'
-    def setUp(self):
+    def __init__(self,methodName='runTest'):
+        # 数据初始化
+        super(GetUploadGoodsStatus,self).__init__(methodName)
+        self.getUploadGoodsStatus_data=ReadExcel().readExcel(r'../../data/getUploadGoodsStatus_api.xlsx','Sheet1')
+        for i in range(len(self.getUploadGoodsStatus_data)):
+            if '{upload_batch_id}' in self.getUploadGoodsStatus_data[i]['body']:
+                 self.getUploadGoodsStatus_data[i]['body']= self.getUploadGoodsStatus_data[i]['body'].replace('{upload_batch_id}',str(self.get_upload_batch_id()))
+            else:
+                continue
+        self.s = requests.session()
+        self._type_equality_funcs = {}
+
+    def get_upload_batch_id(self):
         '''上传商品获得商品批次id'''
         url = "https://m-t1.vova.com.hk/api/v1/product/uploadGoods"
         headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}
         parent_sku='a'+str(random.randint(1,10000))
         data = {
-            "token":self.token,
+            "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo",
             "items": [{
                 "cat_id": "5872",
                 "parent_sku": parent_sku,
@@ -40,38 +50,31 @@ class GetUploadGoodsStatus(unittest.TestCase):
             "ignore_warning": "1"
         }
         r_upload=requests.post(url=url,headers=headers,json=data)
-        return r_upload
+        return r_upload.json()['data']['upload_batch_id']
 
-    def getUploadGoodsStatus1(self):
+    def test_getUploadGoodsStatus1(self):
         '''token和批次id都正确'''
-        r_upload=self.setUp()
-        getUploadGoodsStatus_data={"token": self.token,"conditions": {"upload_batch_id": r_upload.json()['data']['upload_batch_id']}}
-
-        r=requests.post(url=self.getUploadGoodsStatus_url,headers=self.headers,json=getUploadGoodsStatus_data)
-        print(r.json())
+        r = SendRequest.sendRequest(self.s, self.getUploadGoodsStatus_data[0])
+        expect_result1 = self.getUploadGoodsStatus_data[0]['expect_result'].split(":")[1]
+        expect_result2 = self.getUploadGoodsStatus_data[0]['expect_result'].split(":")[2]
         if r.json()['code']=='loading':
-            self.assertEqual(r.json()['code'],'loading')
+            self.assertEqual(r.json()['code'],eval(expect_result1),msg=r.json())
         else:
-            self.assertEqual(r.json()['code'],'success')
+            self.assertEqual(r.json()['code'],eval(expect_result2),msg=r.json())
 
-    def getUploadGoodsStatus2(self):
-        '''token不正确，批次id正确'''
-        r_upload=self.setUp()
-        token='e'
-        getUploadGoodsStatus_data={"token": token,"conditions": {"upload_batch_id": r_upload.json()['data']['upload_batch_id']}}
+    def test_getUploadGoodsStatus2(self):
+        '''token错误，批次id正确'''
+        r = SendRequest.sendRequest(self.s, self.getUploadGoodsStatus_data[1])
+        expect_result = self.getUploadGoodsStatus_data[1]['expect_result'].split(":")[1]
+        self.assertEqual(r.json(),eval(expect_result))
 
-        r=requests.post(url=self.getUploadGoodsStatus_url,headers=self.headers,json=getUploadGoodsStatus_data)
-        print(r.json())
-        self.assertEqual(r.json(),'Token error')
-
-    def getUploadGoodsStatus3(self):
-        '''token正确，批次id不正确'''
-        getUploadGoodsStatus_data={"token": self.token,"conditions": {"upload_batch_id": 'e'}}
-
-        r=requests.post(url=self.getUploadGoodsStatus_url,headers=self.headers,json=getUploadGoodsStatus_data)
-        print(r.json())
-        self.assertEqual(r.json()['code'],'error')
-        self.assertEqual(r.json()['message'],'未查询到该批次的上传信息，请检查批次ID')
+    def test_getUploadGoodsStatus3(self):
+        '''token正确，批次id错误'''
+        r = SendRequest.sendRequest(self.s, self.getUploadGoodsStatus_data[2])
+        expect_result = self.getUploadGoodsStatus_data[2]['expect_result'].split(":")[1]
+        msg=self.getUploadGoodsStatus_data[2]['msg'].split(":")[1]
+        self.assertEqual(r.json()['code'],eval(expect_result))
+        self.assertEqual(r.json()['message'],eval(msg))
 
 if __name__ == '__main__':
-    GetUploadGoodsStatus().getUploadGoodsStatus3()
+    GetUploadGoodsStatus().test_getUploadGoodsStatus3()

@@ -9,13 +9,14 @@ from common.sql_data import SqlData
 class UpdateRegionShippingFee(unittest.TestCase):
     '''更新国家运费'''
 
-    def __init__(self):
+    def __init__(self,methodName='runTest'):
+        # 数据初始化
+        super(UpdateRegionShippingFee,self).__init__(methodName)
         self.updateRegionShippingFee_data = ReadExcel().readExcel(r'../../data/updateRegionShippingFee_api.xlsx','Sheet1')
         for i in range(len(self.updateRegionShippingFee_data)):
-            if self.updateRegionShippingFee_data[i]['sql'] != '' and '{parent_sku}' in \
-                    self.updateRegionShippingFee_data[i]['body']:
+            if self.updateRegionShippingFee_data[i]['sql'] != '' and '{parent_sku}' in self.updateRegionShippingFee_data[i]['body']:
                 a = SqlData.themis_data(self.updateRegionShippingFee_data[i]['sql'])
-                self.updateRegionShippingFee_data[i]['body'] = self.updateRegionShippingFee_data[i]['body'].replace('{parent_sku}', ''.join('%s' % id for id in a[i]))
+                self.updateRegionShippingFee_data[i]['body'] = self.updateRegionShippingFee_data[i]['body'].replace('{parent_sku}',str(a[i]))
             else:
                 continue
         self.s = requests.session()

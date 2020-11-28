@@ -8,7 +8,9 @@ from common.send_request import SendRequest
 
 class TestLogin(unittest.TestCase):
     '''商家后台登录'''
-    def __init__(self):
+    def __init__(self,methodName='runTest'):
+        # 数据初始化
+        super(TestLogin,self).__init__(methodName)
         # 数据初始化
         self.login_data = ReadExcel().readExcel(r'../data/login_api.xlsx', 'Sheet1')
         self.s = requests.session()

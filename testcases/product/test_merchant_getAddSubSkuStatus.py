@@ -9,8 +9,10 @@ from common.send_request import SendRequest
 
 class GetAddSubSkuStatus(unittest.TestCase):
     '''获取新增子sku状态'''
-    def __init__(self):
-        self.getAddProductSku_data=ReadExcel().readExcel(r'../../data/getAddProductSku_api.xlsx','Sheet1')
+    def __init__(self,methodName='runTest'):
+        # 数据初始化
+        super(GetAddSubSkuStatus,self).__init__(methodName)
+        self.getAddProductSku_data=ReadExcel().readExcel(r'../data/getAddProductSku_api.xlsx','Sheet1')
         for i in range(len(self.getAddProductSku_data)):
             if '{upload_batch_id}' in self.getAddProductSku_data[i]['body']:
                 self.getAddProductSku_data[i]['body']=self.getAddProductSku_data[i]['body'].replace('{upload_batch_id}',self.get_upload_batch_id())

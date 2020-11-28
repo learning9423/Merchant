@@ -7,7 +7,9 @@ from common.send_request import SendRequest
 
 class LoginOut(unittest.TestCase):
     '''商家登出'''
-    def __init__(self):
+    def __init__(self,methodName='runTest'):
+        # 数据初始化
+        super(LoginOut,self).__init__(methodName)
         #数据初始化
         self.loginOut_data=ReadExcel().readExcel(r'../data/login_api.xlsx','Sheet2')
         self.s=requests.session()

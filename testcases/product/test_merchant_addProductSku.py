@@ -8,16 +8,18 @@ from common.sql_data import SqlData
 
 class AddProductSku(unittest.TestCase):
     '''新增子sku'''
-    def __init__(self, requsts=None):
-        self.addProductSku_data=ReadExcel().readExcel(r'../../data/addProductSku_api.xlsx', 'Sheet1')
+    def __init__(self,methodName='runTest'):
+        # 数据初始化
+        super(AddProductSku,self).__init__(methodName)
+        self.addProductSku_data=ReadExcel().readExcel(r'../data/addProductSku_api.xlsx', 'Sheet1')
         for i in range(len(self.addProductSku_data)):
             if self.addProductSku_data[i]['sql']!='' and '{parent_sku}' in self.addProductSku_data[i]['body']:
                 a=SqlData.themis_data(self.addProductSku_data[i]['sql'])
                 self.addProductSku_data[i]['body']=self.addProductSku_data[i]['body'].replace('{parent_sku}',''.join('%s' %id for id in a[i]))
-            elif '{goods_sku}' in self.addProductSku_data[i]['body']:
+            if '{goods_sku}' in self.addProductSku_data[i]['body']:
                 self.addProductSku_data[i]['body']=self.addProductSku_data[i]['body'].replace('{goods_sku}','r'+str(random.randint(1,10000)))
-            elif '{style_quantity}' in self.addProductSku_data[i]['body']:
-                self.addProductSku_data[i]['body']=self.addProductSku_data[i]['body'].replace('{style_quantity}',random.randint(1,10000))
+            if '{style_quantity}' in self.addProductSku_data[i]['body']:
+                self.addProductSku_data[i]['body']=self.addProductSku_data[i]['body'].replace('{style_quantity}',str(random.randint(1,10000)))
             else:
                 continue
         self.s=requests.session()

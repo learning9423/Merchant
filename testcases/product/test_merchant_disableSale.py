@@ -7,16 +7,17 @@ from common.sql_data import SqlData
 
 class DisableSale(unittest.TestCase):
     '''商品下架'''
-    def __init__(self):
+    def __init__(self,methodName='runTest'):
         # 数据初始化
+        super(DisableSale,self).__init__(methodName)
         self.disableSale_data = ReadExcel().readExcel(r'../data/ableSale&enableSale_api.xlsx', 'Sheet2')
         try:
             for i in range(len(self.disableSale_data)):
                 if self.disableSale_data[i]['sql']!='' and '{virtual_goods_id}' in self.disableSale_data[i]['body']:
                     a=SqlData.themis_data(self.disableSale_data[i]['sql'])#连接数据库，返回数组，sql有可能不同
                     self.disableSale_data[i]['body']=self.disableSale_data[i]['body'].replace('{virtual_goods_id}',''.join('%s' %id for id in a[i]))
-                elif self.disableSale_data[i]=='':
-                    break
+                else:
+                    continue
         except IndexError:
                 print('下标越界')#因为海外仓商品数量少，所以可能存在商品不足，赋值错误
         self.s = requests.session()

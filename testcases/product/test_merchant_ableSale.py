@@ -9,8 +9,9 @@ from common.sql_data import SqlData
 class AbleSale(unittest.TestCase):
     '''商品上架'''
 
-    def __init__(self):
+    def __init__(self,methodName='runTest'):
         # 数据初始化
+        super(AbleSale,self).__init__(methodName)
         self.ableSale_data = ReadExcel().readExcel('../data/ableSale&enableSale_api.xlsx', 'Sheet1')
         for i in range(len(self.ableSale_data)):
             if self.ableSale_data[i]['sql']!='' and '{virtual_goods_id}' in self.ableSale_data[i]['body']:

@@ -5,22 +5,21 @@ from HTMLTestRunner import HTMLTestRunner
 
 
 class test_suite(unittest.TestCase):
-    spath='../testcases'
-    log_path='../log'
+
     def add_case(self):
         suite=unittest.TestSuite()
-
-        suite.addTests(unittest.defaultTestLoader.discover(self.spath,pattern='test*.py'))
+        spath='../testcases'
+        suite.addTests(unittest.defaultTestLoader.discover(spath,pattern='test_merchant_getProductImgInfo.py'))
         return suite
 
     def run_test(self):
-
+        log_path='../log'
         now=time.time()
         rpath=r'../report/商家后台接口测试'+str(now)+'report.html'
         logging.basicConfig(level=logging.DEBUG,
                         format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
                         datefmt='%a, %d %b %Y %H:%M:%S',
-                        filename=self.log_path + '/' + str(now) + r"result.log",
+                        filename=log_path + '/' + str(now) + r"result.log",
                         filemode='w')
         logger = logging.getLogger()
         logger.debug(self.add_case())

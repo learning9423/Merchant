@@ -7,8 +7,10 @@ from common.send_request import SendRequest
 
 class GetGoodsCategory(unittest.TestCase):
     '''获取最新分类id信息'''
-    def __init__(self):
-        self.getGoodsCategory_data=ReadExcel().readExcel(r'../../data/getGoodsCategory_api.xlsx','Sheet1')
+    def __init__(self,methodName='runTest'):
+        # 数据初始化
+        super(GetGoodsCategory,self).__init__(methodName)
+        self.getGoodsCategory_data=ReadExcel().readExcel(r'../data/getGoodsCategory_api.xlsx','Sheet1')
         self.s = requests.session()
         self._type_equality_funcs={}
 
