@@ -4,21 +4,17 @@ from pip._vendor import requests
 from common.read_excel import ReadExcel
 from common.send_request import SendRequest
 
-
+getUploadGoodsStatus_data=ReadExcel().readExcel(r'../data/getUploadGoodsStatus_api.xlsx','Sheet1')
+s = requests.session()
 class GetUploadGoodsStatus(unittest.TestCase):
     '''获取商品上传状态'''
-    def __init__(self,methodName='runTest'):
-        # 数据初始化
-        super(GetUploadGoodsStatus,self).__init__(methodName)
-        self.getUploadGoodsStatus_data=ReadExcel().readExcel(r'../data/getUploadGoodsStatus_api.xlsx','Sheet1')
-        for i in range(len(self.getUploadGoodsStatus_data)):
-            if '{upload_batch_id}' in self.getUploadGoodsStatus_data[i]['body']:
-                 self.getUploadGoodsStatus_data[i]['body']= self.getUploadGoodsStatus_data[i]['body'].replace('{upload_batch_id}',str(self.get_upload_batch_id()))
+    @classmethod
+    def setUpClass(cls):
+        for i in range(len(getUploadGoodsStatus_data)):
+            if '{upload_batch_id}' in getUploadGoodsStatus_data[i]['body']:
+                 getUploadGoodsStatus_data[i]['body']= getUploadGoodsStatus_data[i]['body'].replace('{upload_batch_id}', str(cls.get_upload_batch_id()))
             else:
                 continue
-        self.s = requests.session()
-        self._type_equality_funcs = {}
-
     def get_upload_batch_id(self):
         '''上传商品获得商品批次id'''
         url = "https://m-t1.vova.com.hk/api/v1/product/uploadGoods"
@@ -54,9 +50,9 @@ class GetUploadGoodsStatus(unittest.TestCase):
 
     def test_getUploadGoodsStatus1(self):
         '''token和批次id都正确'''
-        r = SendRequest.sendRequest(self.s, self.getUploadGoodsStatus_data[0])
-        expect_result1 = self.getUploadGoodsStatus_data[0]['expect_result'].split(":")[1]
-        expect_result2 = self.getUploadGoodsStatus_data[0]['expect_result'].split(":")[2]
+        r = SendRequest.sendRequest(s, getUploadGoodsStatus_data[0])
+        expect_result1 = getUploadGoodsStatus_data[0]['expect_result'].split(":")[1]
+        expect_result2 = getUploadGoodsStatus_data[0]['expect_result'].split(":")[2]
         if r.json()['code']=='loading':
             self.assertEqual(r.json()['code'],eval(expect_result1),msg=r.json())
         else:
@@ -64,15 +60,15 @@ class GetUploadGoodsStatus(unittest.TestCase):
 
     def test_getUploadGoodsStatus2(self):
         '''token错误，批次id正确'''
-        r = SendRequest.sendRequest(self.s, self.getUploadGoodsStatus_data[1])
-        expect_result = self.getUploadGoodsStatus_data[1]['expect_result'].split(":")[1]
+        r = SendRequest.sendRequest(s, getUploadGoodsStatus_data[1])
+        expect_result = getUploadGoodsStatus_data[1]['expect_result'].split(":")[1]
         self.assertEqual(r.json(),eval(expect_result))
 
     def test_getUploadGoodsStatus3(self):
         '''token正确，批次id错误'''
-        r = SendRequest.sendRequest(self.s, self.getUploadGoodsStatus_data[2])
-        expect_result = self.getUploadGoodsStatus_data[2]['expect_result'].split(":")[1]
-        msg=self.getUploadGoodsStatus_data[2]['msg'].split(":")[1]
+        r = SendRequest.sendRequest(s, getUploadGoodsStatus_data[2])
+        expect_result = getUploadGoodsStatus_data[2]['expect_result'].split(":")[1]
+        msg=getUploadGoodsStatus_data[2]['msg'].split(":")[1]
         self.assertEqual(r.json()['code'],eval(expect_result))
         self.assertEqual(r.json()['message'],eval(msg))
 

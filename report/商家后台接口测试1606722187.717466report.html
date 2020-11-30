@@ -116,19 +116,19 @@ function html_escape(s) {
 <div class='heading'>
 <h1 style="font-family: Microsoft YaHei">商家后台测试报告</h1>
 <p class='attribute'><strong>测试人员 : </strong> 测试李建刚</p>
-<p class='attribute'><strong>开始时间 : </strong> 2020-11-28 20:16:38</p>
-<p class='attribute'><strong>合计耗时 : </strong> 0:00:28.218773</p>
-<p class='attribute'><strong>测试结果 : </strong> 共 5，通过 3，失败 2，通过率= 60.00%</p>
+<p class='attribute'><strong>开始时间 : </strong> 2020-11-30 15:43:07</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:06.110832</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 3，通过 3，通过率= 100.00%</p>
 
 <p class='description'>商家后台测试环境接口测试，本次测试接口为商品模块接口</p>
 </div>
 
 
 <p id='show_detail_line'>
-<a class="btn btn-primary" href='javascript:showCase(0)'>通过率(60.00%)</a>
-<a class="btn btn-danger" href='javascript:showCase(1)'>失败(2)</a>
+<a class="btn btn-primary" href='javascript:showCase(0)'>通过率(100.00%)</a>
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败(0)</a>
 <a class="btn btn-success" href='javascript:showCase(2)'>通过(3)</a>
-<a class="btn btn-info" href='javascript:showCase(3)'>所有(5)</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有(3)</a>
 </p>
 <table id='result_table' class="table table-condensed table-bordered table-hover">
 <colgroup>
@@ -148,35 +148,27 @@ function html_escape(s) {
     <td>详细</td>
 </tr>
 
-<tr class='failClass warning'>
-    <td>product.test_merchant_disableSale.DisableSale: 商品下架</td>
-    <td class="text-center">5</td>
+<tr class='passClass warning'>
+    <td>product.test_merchant_ableSale.AbleSale: 商品上架</td>
     <td class="text-center">3</td>
-    <td class="text-center">2</td>
+    <td class="text-center">3</td>
     <td class="text-center">0</td>
-    <td class="text-center"><a href="javascript:showClassDetail('c1',5)" class="detail" id='c1'>详细</a></td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',3)" class="detail" id='c1'>详细</a></td>
 </tr>
 
 <tr id='pt1_1' class='hiddenRow'>
-    <td class='passCase'><div class='testcase'>test_disableSale1: 有海外仓库存:直接下架</div></td>
-    <td colspan='5' align='center'><span class="label label-success success">通过</span></td>
-</tr>
-
-<tr id='ft1_2' class='none'>
-    <td class='failCase'><div class='testcase'>test_disableSale2: 有海外仓库存:清零标准仓库存不下架</div></td>
+    <td class='passCase'><div class='testcase'>test_ableSale1: token和商品id都正确</div></td>
     <td colspan='5' align='center'>
     <!--默认收起错误信息 -Findyou
-    <button id='btn_ft1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_2' style='background-color: #696969' >失败</button>
-    <div id='div_ft1_2' class="collapse">  -->
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1' style='background-color: #696969' >通过</button>
+    <div id='div_pt1_1' class="collapse">  -->
     <!-- 默认展开错误信息 -Findyou -->
-    <button id='btn_ft1_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_2' style='background-color: #696969'>失败</button>
-    <div id='div_ft1_2' class="collapse in">
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_1' style='background-color: #696969'>通过</button>
+    <div id='div_pt1_1' class="collapse in">
     <pre>
     
-ft1_2: Traceback (most recent call last):
-  File "F:\jgliwork\Merchant\testcases\product\test_merchant_disableSale.py", line 40, in test_disableSale2
-    self.assertEqual(r.json()['execute_status'],eval(expect_result),msg=r.json())
-AssertionError: 'failed' != 'success' : {'execute_status': 'failed', 'data': {'code': 41000, 'message': '没有商品满足操作条件', 'errors_list': [{'code': 41003, 'message': '商品未上架', 'goods_list': ['1013046']}]}}
+pt1_1: {'id': 'api_01', 'name': '商品上架接口', 'description': 'token和商品id都正确', 'method': 'post', 'url': 'https://m-t1.vova.com.hk/api/v1/product/enableSale', 'params': '', 'headers': "{'Content-Type':'application/x-www-form-urlencoded','Authorization':'Basic bGViYmF5OnBhc3N3MHJk'}", 'body': '{  \n    "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo",\n    "goods_list": [\n    "1012908"\n  ]\n}', 'type': 'json', 'sql': "select vg.virtual_goods_id from fbv_sku_warehouse_storage\n fsws inner join goods_sku gs on gs.sku_id = fsws.sku_id inner join\n goods g on g.goods_id = gs.goods_id inner join category c on g.cat_id=c.cat_id\ninner join virtual_goods vg on vg.goods_id=g.goods_id  where\n fsws.fbv_warehouse_storage!=0 and g.is_on_sale='0' and g.is_delete='0'\n and c.parent_id not in(194,5977) and g.merchant_id ='13' and g.sale_status='normal'\n group by vg.virtual_goods_id\n", 'expect_result': "execute_status':'success'", 'msg': "code':20000"}
 
 
     </pre>
@@ -184,21 +176,18 @@ AssertionError: 'failed' != 'success' : {'execute_status': 'failed', 'data': {'c
     </td>
 </tr>
 
-<tr id='ft1_3' class='none'>
-    <td class='failCase'><div class='testcase'>test_disableSale3: 无海外仓直接下架:token和商品id都正确</div></td>
+<tr id='pt1_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_ableSale2: 商品id错误</div></td>
     <td colspan='5' align='center'>
     <!--默认收起错误信息 -Findyou
-    <button id='btn_ft1_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_3' style='background-color: #696969' >失败</button>
-    <div id='div_ft1_3' class="collapse">  -->
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_2' style='background-color: #696969' >通过</button>
+    <div id='div_pt1_2' class="collapse">  -->
     <!-- 默认展开错误信息 -Findyou -->
-    <button id='btn_ft1_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_3' style='background-color: #696969'>失败</button>
-    <div id='div_ft1_3' class="collapse in">
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_2' style='background-color: #696969'>通过</button>
+    <div id='div_pt1_2' class="collapse in">
     <pre>
     
-ft1_3: Traceback (most recent call last):
-  File "F:\jgliwork\Merchant\testcases\product\test_merchant_disableSale.py", line 49, in test_disableSale3
-    self.assertEqual(r.json()['execute_status'],eval(expect_result),msg=r.json())
-AssertionError: 'failed' != 'success' : {'execute_status': 'failed', 'data': {'code': 41000, 'message': '没有商品满足操作条件', 'errors_list': [{'code': 41003, 'message': '商品未上架', 'goods_list': ['26740371']}]}}
+pt1_2: {'execute_status': 'failed', 'data': {'code': 41000, 'message': '没有商品满足操作条件', 'errors_list': [{'code': 41001, 'message': '不存在或无效的商品id', 'goods_list': ['1111111111111']}]}}
 
 
     </pre>
@@ -206,23 +195,18 @@ AssertionError: 'failed' != 'success' : {'execute_status': 'failed', 'data': {'c
     </td>
 </tr>
 
-<tr id='pt1_4' class='hiddenRow'>
-    <td class='passCase'><div class='testcase'>test_disableSale4: 无海外仓直接下架:商品id错误</div></td>
-    <td colspan='5' align='center'><span class="label label-success success">通过</span></td>
-</tr>
-
-<tr id='pt1_5' class='hiddenRow'>
-    <td class='passCase'><div class='testcase'>test_disableSale5: 无海外仓库存直接下架:token错误</div></td>
+<tr id='pt1_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_ableSale3: token错误</div></td>
     <td colspan='5' align='center'><span class="label label-success success">通过</span></td>
 </tr>
 
 <tr id='total_row' class="text-center active">
     <td>总计</td>
-    <td>5</td>
     <td>3</td>
-    <td>2</td>
+    <td>3</td>
     <td>0</td>
-    <td>通过率：60.00%</td>
+    <td>0</td>
+    <td>通过率：100.00%</td>
 </tr>
 </table>
 

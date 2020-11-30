@@ -6,20 +6,18 @@ import requests
 from common.read_excel import ReadExcel
 from common.send_request import SendRequest
 
-
+getAddProductSku_data=ReadExcel().readExcel(r'../data/getAddProductSku_api.xlsx','Sheet1')
+s=requests.session()
 class GetAddSubSkuStatus(unittest.TestCase):
     '''获取新增子sku状态'''
-    def __init__(self,methodName='runTest'):
-        # 数据初始化
-        super(GetAddSubSkuStatus,self).__init__(methodName)
-        self.getAddProductSku_data=ReadExcel().readExcel(r'../data/getAddProductSku_api.xlsx','Sheet1')
-        for i in range(len(self.getAddProductSku_data)):
-            if '{upload_batch_id}' in self.getAddProductSku_data[i]['body']:
-                self.getAddProductSku_data[i]['body']=self.getAddProductSku_data[i]['body'].replace('{upload_batch_id}',self.get_upload_batch_id())
+    @classmethod
+    def setUpClass(cls):
+
+        for i in range(len(getAddProductSku_data)):
+            if '{upload_batch_id}' in getAddProductSku_data[i]['body']:
+                getAddProductSku_data[i]['body']=getAddProductSku_data[i]['body'].replace('{upload_batch_id}',self.get_upload_batch_id())
             else:
                 continue
-        self.s=requests.session()
-        self._type_equality_funcs={}
 
     def get_upload_batch_id(self):
         '''获取新增子sku的批次id'''
@@ -49,9 +47,9 @@ class GetAddSubSkuStatus(unittest.TestCase):
 
     def test_getAddProductSku1(self):
         '''token与批次id都正确'''
-        r=SendRequest.sendRequest(self.s,self.getAddProductSku_data[0])
-        expect_result1=self.getAddProductSku_data[0]['expect_result'].split(":")[1]
-        expect_result2=self.getAddProductSku_data[0]['expect_result'].split(":")[2]
+        r=SendRequest.sendRequest(s,getAddProductSku_data[0])
+        expect_result1=getAddProductSku_data[0]['expect_result'].split(":")[1]
+        expect_result2=getAddProductSku_data[0]['expect_result'].split(":")[2]
         if r.json()['execute_status']=='partial_success':
             self.assertEqual(r.json()['execute_status'],eval(expect_result1),msg=r.json())
         else:
@@ -59,15 +57,15 @@ class GetAddSubSkuStatus(unittest.TestCase):
 
     def test_getAddProductSku2(self):
         '''token不正确，批次id正确'''
-        r=SendRequest.sendRequest(self.s,self.getAddProductSku_data[1])
-        expect_result=self.getAddProductSku_data[1]['expect_result'].split(":")[1]
+        r=SendRequest.sendRequest(s,getAddProductSku_data[1])
+        expect_result=getAddProductSku_data[1]['expect_result'].split(":")[1]
         self.assertEqual(r.json(),eval(expect_result),msg=r.json())
 
     def test_getAddProductSku3(self):
         '''token正确，批次id正确'''
-        r=SendRequest.sendRequest(self.s,self.getAddProductSku_data[2])
-        expect_result=self.getAddProductSku_data[2]['expect_result'].split(":")[1]
-        msg=self.getAddProductSku_data[2]['msg'].split(":")[1]
+        r=SendRequest.sendRequest(s,getAddProductSku_data[2])
+        expect_result=getAddProductSku_data[2]['expect_result'].split(":")[1]
+        msg=getAddProductSku_data[2]['msg'].split(":")[1]
 
         self.assertEqual(r.json()['execute_status'],eval(expect_result),msg=r.json())
         self.assertEqual(r.json()['data']['message'],eval(msg),msg=r.json())
