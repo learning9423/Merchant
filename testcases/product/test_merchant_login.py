@@ -9,8 +9,6 @@ login_data = ReadExcel().readExcel(r'../data/login_api.xlsx', 'Sheet1')
 s = requests.session()
 class TestLogin(unittest.TestCase):
     '''商家后台登录'''
-    login_data = ReadExcel().readExcel(r'../data/login_api.xlsx', 'Sheet1')
-    s = requests.session()
     def test_login1(self):
         '''用户名和密码都正确'''
         r = SendRequest.sendRequest(s, login_data[0])

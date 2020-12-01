@@ -4,7 +4,7 @@ from common.read_excel import ReadExcel
 from common.send_request import SendRequest
 from common.sql_data import SqlData
 
-getProductImgInfo_data=ReadExcel().readExcel(r'../getProductImgInfo_api.xlsx','Sheet1')
+getProductImgInfo_data=ReadExcel().readExcel(r'../data/getProductImgInfo_api.xlsx', 'Sheet1')
 s = requests.session()
 class GetProductImgInfo(unittest.TestCase):
     '''获取商品图片信息'''

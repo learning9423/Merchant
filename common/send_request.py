@@ -25,13 +25,13 @@ class SendRequest():
             body = api_data['body']
 
         # 参数请求
-        r = s.request(url=url, method=method, headers=header, params=par, data=body)
+        r = s.request(url=url, method=method, headers=header, params=par, data=body,allow_redirects=False)
 
         return r
 
 
 if __name__ == '__main__':
     s = requests.session()
-    login = ReadExcel().readExcel(r'../data/login_api.xlsx', 'Sheet1')
-    re =SendRequest().sendRequest(s,login[0])
-    print(re.json())
+    login_data = ReadExcel().readExcel(r'../data/login_api.xlsx', 'Sheet1')
+    r=SendRequest.sendRequest(s,login_data[1])
+    print(r.json())

@@ -9,14 +9,7 @@ s = requests.session()
 class GetUploadGoodsStatus(unittest.TestCase):
     '''获取商品上传状态'''
     @classmethod
-    def setUpClass(cls):
-        for i in range(len(getUploadGoodsStatus_data)):
-            if '{upload_batch_id}' in getUploadGoodsStatus_data[i]['body']:
-                 getUploadGoodsStatus_data[i]['body']= getUploadGoodsStatus_data[i]['body'].replace('{upload_batch_id}', str(cls.get_upload_batch_id()))
-            else:
-                continue
-    def get_upload_batch_id(self):
-        '''上传商品获得商品批次id'''
+    def setUpClass(cls, self=None):
         url = "https://m-t1.vova.com.hk/api/v1/product/uploadGoods"
         headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}
         parent_sku='a'+str(random.randint(1,10000))
@@ -46,7 +39,12 @@ class GetUploadGoodsStatus(unittest.TestCase):
             "ignore_warning": "1"
         }
         r_upload=requests.post(url=url,headers=headers,json=data)
-        return r_upload.json()['data']['upload_batch_id']
+        for i in range(len(getUploadGoodsStatus_data)):
+            if '{upload_batch_id}' in getUploadGoodsStatus_data[i]['body']:
+                 getUploadGoodsStatus_data[i]['body']= getUploadGoodsStatus_data[i]['body'].replace('{upload_batch_id}', r_upload.json()['data']['upload_batch_id'])
+            else:
+                continue
+
 
     def test_getUploadGoodsStatus1(self):
         '''token和批次id都正确'''
