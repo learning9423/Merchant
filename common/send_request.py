@@ -30,8 +30,4 @@ class SendRequest():
         return r
 
 
-if __name__ == '__main__':
-    s = requests.session()
-    login_data = ReadExcel().readExcel(r'../data/login_api.xlsx', 'Sheet1')
-    r=SendRequest.sendRequest(s,login_data[1])
-    print(r.json())
+
