@@ -23,6 +23,6 @@ class ReadExcel():
 
 
 if __name__ == '__main__':
-    data=ReadExcel().readExcel(r'../data/getProductImgInfo_api.xlsx','Sheet1')
+    data=ReadExcel().readExcel(r'../data/deleteGoods_api.xlsx','Sheet1')
     print(data)
 

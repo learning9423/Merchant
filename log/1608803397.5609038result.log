@@ -1,0 +1,1 @@
+Thu, 24 Dec 2020 17:49:58 test_suite.py[line:25] DEBUG <unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[]>, <unittest.suite.TestSuite tests=[<unittest.loader._FailedTest testMethod=product.test_merchant_deleteGoods>]>]>
