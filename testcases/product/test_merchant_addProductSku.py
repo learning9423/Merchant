@@ -54,7 +54,7 @@ class AddProductSku(unittest.TestCase):
         self.assertEqual(r.json(), eval(expect_result),msg=r.json())
 
 if __name__ == '__main__':
-    AddProductSku().test_addProductSku2()
+    AddProductSku().test_addProductSku3()
 
 
 
