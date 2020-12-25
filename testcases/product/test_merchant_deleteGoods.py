@@ -10,10 +10,13 @@ class DeleteGoods(unittest.TestCase):
     # @classmethod
     def setUpClass(cls):
         for i in range(len(deleteGoods_data)):
-            if deleteGoods_data[i]['sql'] !='' and '{product_id}' in deleteGoods_data[i]['body']:
+            if deleteGoods_data[i]['sql'] !='' and '{virtual_goods_id}' in deleteGoods_data[i]['body']:
                 a=SqlData.themis_data(deleteGoods_data[i]['sql'])
                 print(a[i])
-                deleteGoods_data[i]['body']=deleteGoods_data[i]['body'].replace('{product_id}',''.join('%s' %id for id in range(a[i])))
+                deleteGoods_data[i]['body']=deleteGoods_data[i]['body'].replace('{virtual_goods_id}',''.join('%s' %id for id in a[i]))
+                if
+            else:
+                continue
 
     def test_deleteGoods1(self):
         '''商品id和token正确'''
