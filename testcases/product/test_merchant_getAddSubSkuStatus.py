@@ -56,14 +56,14 @@ class GetAddSubSkuStatus(unittest.TestCase):
     def test_getAddSubSkuStatus2(self):
         '''token不正确，批次id正确'''
         r=SendRequest.sendRequest(s,getAddSubSkuStatus_data[1])
-        expect_result=getAddSubSkuStatus_data[1]['expect_result'].split(":")[1]
+        expect_result=getAddSubSkuStatus_data[1]['expect_result'].split(":",1)[1]
         self.assertEqual(r.json(),eval(expect_result),msg=r.json())
 
     def test_getAddSubSkuStatus3(self):
         '''token正确，批次id正确'''
         r=SendRequest.sendRequest(s,getAddSubSkuStatus_data[2])
-        expect_result=getAddSubSkuStatus_data[2]['expect_result'].split(":")[1]
-        msg=getAddSubSkuStatus_data[2]['msg'].split(":")[1]
+        expect_result=getAddSubSkuStatus_data[2]['expect_result'].split(":",1)[1]
+        msg=getAddSubSkuStatus_data[2]['msg'].split(":",1)[1]
 
         self.assertEqual(r.json()['execute_status'],eval(expect_result),msg=r.json())
         self.assertEqual(r.json()['data']['message'],eval(msg),msg=r.json())

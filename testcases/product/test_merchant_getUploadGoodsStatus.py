@@ -59,14 +59,14 @@ class GetUploadGoodsStatus(unittest.TestCase):
     def test_getUploadGoodsStatus2(self):
         '''token错误，批次id正确'''
         r = SendRequest.sendRequest(s, getUploadGoodsStatus_data[1])
-        expect_result = getUploadGoodsStatus_data[1]['expect_result'].split(":")[1]
+        expect_result = getUploadGoodsStatus_data[1]['expect_result'].split(":",1)[1]
         self.assertEqual(r.json(),eval(expect_result))
 
     def test_getUploadGoodsStatus3(self):
         '''token正确，批次id错误'''
         r = SendRequest.sendRequest(s, getUploadGoodsStatus_data[2])
-        expect_result = getUploadGoodsStatus_data[2]['expect_result'].split(":")[1]
-        msg=getUploadGoodsStatus_data[2]['msg'].split(":")[1]
+        expect_result = getUploadGoodsStatus_data[2]['expect_result'].split(":",1)[1]
+        msg=getUploadGoodsStatus_data[2]['msg'].split(":",1)[1]
         self.assertEqual(r.json()['code'],eval(expect_result))
         self.assertEqual(r.json()['message'],eval(msg))
 

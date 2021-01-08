@@ -24,8 +24,8 @@ class GetGroupProductId(unittest.TestCase):
     def test_getGroupProductId1(self):
         '''商品id正确，token正确'''
         r=SendRequest.sendRequest(s,getGroupProductId_data[0])
-        expect_result=getGroupProductId_data[0]['expect_result'].split(":")[1]
-        msg=getGroupProductId_data[0]['msg'].split(":")[1]
+        expect_result=getGroupProductId_data[0]['expect_result'].split(":",1)[1]
+        msg=getGroupProductId_data[0]['msg'].split(":",1)[1]
 
         self.assertEqual(r.json()['execute_status'],eval(expect_result),msg=r.json())
         self.assertEqual(r.json()['data'][0]['goods_id'],eval(msg),msg=r.json())
@@ -33,15 +33,15 @@ class GetGroupProductId(unittest.TestCase):
     def test_getGroupProductId2(self):
         '''商品id正确，token错误'''
         r=SendRequest.sendRequest(s,getGroupProductId_data[1])
-        expect_result=getGroupProductId_data[1]['expect_result'].split(":")[1]
+        expect_result=getGroupProductId_data[1]['expect_result'].split(":",1)[1]
 
         self.assertEqual(r.json(),eval(expect_result),msg=r.json())
 
     def test_getGroupProductId3(self):
         '''商品id为空，token正确'''
         r=SendRequest.sendRequest(s,getGroupProductId_data[2])
-        expect_result=getGroupProductId_data[2]['expect_result'].split(":")[1]
-        msg=getGroupProductId_data[2]['msg'].split(":")[1]
+        expect_result=getGroupProductId_data[2]['expect_result'].split(":",1)[1]
+        msg=getGroupProductId_data[2]['msg'].split(":",1)[1]
 
         self.assertEqual(r.json()['execute_status'],eval(expect_result),msg=r.json())
         self.assertEqual(r.json()['message'],eval(msg),msg=r.json())
@@ -49,8 +49,8 @@ class GetGroupProductId(unittest.TestCase):
     def test_getGroupProductId4(self):
         '''商品id错误，token正确'''
         r=SendRequest.sendRequest(s,getGroupProductId_data[3])
-        expect_result=getGroupProductId_data[3]['expect_result'].split(":")[1]
-        msg=getGroupProductId_data[3]['msg'].split(":")[1]
+        expect_result=getGroupProductId_data[3]['expect_result'].split(":",1)[1]
+        msg=getGroupProductId_data[3]['msg'].split(":",1)[1]
 
         self.assertEqual(r.json()['execute_status'],eval(expect_result),msg=r.json())
         self.assertEqual(r.json()['message'],eval(msg),msg=r.json())

@@ -12,13 +12,13 @@ class GetGoodsCategory(unittest.TestCase):
     def test_getGoodsCategory1(self):
         '''token正确'''
         r=SendRequest.sendRequest(s,getGoodsCategory_data[0])
-        expect_result=getGoodsCategory_data[0]['expect_result'].split(":")[1]
+        expect_result=getGoodsCategory_data[0]['expect_result'].split(":",1)[1]
         self.assertEqual(r.json()['execute_status'],eval(expect_result),msg=r.json())
 
     def test_getGoodsCategory2(self):
         '''token不正确'''
         r=SendRequest.sendRequest(s,getGoodsCategory_data[1])
-        expect_result=getGoodsCategory_data[1]['expect_result'].split(":")[1]
+        expect_result=getGoodsCategory_data[1]['expect_result'].split(":",1)[1]
         self.assertEqual(r.json(),eval(expect_result),msg=r.json())
 
 

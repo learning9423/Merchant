@@ -22,8 +22,8 @@ class AbleSale(unittest.TestCase):
         '''token和商品id都正确'''
 
         r=SendRequest.sendRequest(s,ableSale_data[0])
-        expect_result=ableSale_data[0]['expect_result'].split(":")[1]
-        msg=ableSale_data[0]['msg'].split(":")[1]
+        expect_result=ableSale_data[0]['expect_result'].split(":",1)[1]
+        msg=ableSale_data[0]['msg'].split(":",1)[1]
 
         self.assertEqual(r.json()['execute_status'],eval(expect_result),msg=r.json())
         self.assertEqual(r.json()['data']['code'],eval(msg),msg=r.json())
@@ -32,8 +32,8 @@ class AbleSale(unittest.TestCase):
         '''商品id错误'''
         #现接口返回错误，等开发修改
         r=SendRequest.sendRequest(s,ableSale_data[1])
-        expect_result=ableSale_data[1]['expect_result'].split(":")[1]
-        msg=ableSale_data[1]['msg'].split(":")[1]
+        expect_result=ableSale_data[1]['expect_result'].split(":",1)[1]
+        msg=ableSale_data[1]['msg'].split(":",1)[1]
         print(r.json())
         self.assertEqual(r.json()['execute_status'],eval(expect_result),msg=r.json())
         self.assertEqual(r.json()['data']['errors_list'][0]['code'], eval(msg),msg=r.json())
@@ -41,7 +41,7 @@ class AbleSale(unittest.TestCase):
     def test_ableSale3(self):
         '''token错误'''
         r=SendRequest.sendRequest(s,ableSale_data[2])
-        expect_result=ableSale_data[2]['expect_result'].split(":")[1]
+        expect_result=ableSale_data[2]['expect_result'].split(":",1)[1]
 
         self.assertEqual(r.json(), eval(expect_result),msg=r.json())
 

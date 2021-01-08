@@ -26,8 +26,8 @@ class UpdateSkuImg(unittest.TestCase):
     def test_updateSkuImg1(self):
         '''token和参数都正确'''
         r = SendRequest.sendRequest(s, updateSkuImg_data[0])
-        expect_result = updateSkuImg_data[0]['expect_result'].split(":")[1]
-        msg = updateSkuImg_data[0]['msg'].split(":")[1]
+        expect_result = updateSkuImg_data[0]['expect_result'].split(":",1)[1]
+        msg = updateSkuImg_data[0]['msg'].split(":",1)[1]
 
         self.assertEqual(r.json()['execute_status'], eval(expect_result),msg=r.json())
         self.assertEqual(r.json()['data']['code'] ,eval(msg),msg=r.json())
@@ -35,23 +35,23 @@ class UpdateSkuImg(unittest.TestCase):
     def test_updateSkuImg2(self):
         '''token错误，其余参数正确'''
         r = SendRequest.sendRequest(s, updateSkuImg_data[1])
-        expect_result = updateSkuImg_data[1]['expect_result'].split(":")[1]
+        expect_result = updateSkuImg_data[1]['expect_result'].split(":",1)[1]
 
         self.assertEqual(r.json(), eval(expect_result),msg=r.json())
 
     def test_updateSkuImg3(self):
         '''token正确，product_id错误'''
         r = SendRequest.sendRequest(s, updateSkuImg_data[2])
-        expect_result = updateSkuImg_data[2]['expect_result'].split(":")[1]
-        msg = updateSkuImg_data[2]['msg'].split(":")[1]
+        expect_result = updateSkuImg_data[2]['expect_result'].split(":",1)[1]
+        msg = updateSkuImg_data[2]['msg'].split(":",1)[1]
         self.assertEqual(r.json()['execute_status'], eval(expect_result),msg=r.json())
         self.assertEqual(r.json()['data']['code'] ,eval(msg),msg=r.json())
 
     def test_updateSkuImg4(self):
         '''token正确，goods_sku错误'''
         r = SendRequest.sendRequest(s, updateSkuImg_data[3])
-        expect_result = updateSkuImg_data[3]['expect_result'].split(":")[1]
-        msg = updateSkuImg_data[3]['msg'].split(":")[1]
+        expect_result = updateSkuImg_data[3]['expect_result'].split(":",1)[1]
+        msg = updateSkuImg_data[3]['msg'].split(":",1)[1]
 
         self.assertEqual(r.json()['execute_status'], eval(expect_result),msg=r.json())
         self.assertEqual(r.json()['data']['errors_list'][0]['code'] ,eval(msg),msg=r.json())
@@ -59,8 +59,8 @@ class UpdateSkuImg(unittest.TestCase):
     def test_updateSkuImg5(self):
         '''token正确，img_id错误'''
         r = SendRequest.sendRequest(s, updateSkuImg_data[4])
-        expect_result = updateSkuImg_data[4]['expect_result'].split(":")[1]
-        msg = updateSkuImg_data[4]['msg'].split(":")[1]
+        expect_result = updateSkuImg_data[4]['expect_result'].split(":",1)[1]
+        msg = updateSkuImg_data[4]['msg'].split(":",1)[1]
 
         self.assertEqual(r.json()['execute_status'], eval(expect_result),msg=r.json())
         self.assertEqual(r.json()['data']['errors_list'][0]['code'] ,eval(msg),msg=r.json())
