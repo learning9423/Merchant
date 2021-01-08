@@ -1,5 +1,4 @@
+import time
 
-
- '''"msg":"茶品：’147852‘不能上架"'''
-
-[]'''"msg":"茶品：147852不能上架"'''{}
+if __name__ == '__main__':
+    print(time.localtime())

@@ -1,7 +1,0 @@
-Mon, 30 Nov 2020 17:03:04 test_suite.py[line:25] DEBUG <unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[]>, <unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<product.test_merchant_login.TestLogin testMethod=test_login1>, <product.test_merchant_login.TestLogin testMethod=test_login2>, <product.test_merchant_login.TestLogin testMethod=test_login3>, <product.test_merchant_login.TestLogin testMethod=test_login4>, <product.test_merchant_login.TestLogin testMethod=test_login5>]>]>]>
-Mon, 30 Nov 2020 17:03:04 connectionpool.py[line:937] DEBUG Starting new HTTPS connection (1): m-t1.vova.com.hk:443
-Mon, 30 Nov 2020 17:03:05 connectionpool.py[line:433] DEBUG https://m-t1.vova.com.hk:443 "POST /index.php?q=admin/main/index/login HTTP/1.1" 200 None
-Mon, 30 Nov 2020 17:03:09 connectionpool.py[line:433] DEBUG https://m-t1.vova.com.hk:443 "POST /index.php?q=admin/main/index/login HTTP/1.1" 200 None
-Mon, 30 Nov 2020 17:03:09 connectionpool.py[line:433] DEBUG https://m-t1.vova.com.hk:443 "POST /index.php?q=admin/main/index/login HTTP/1.1" 200 None
-Mon, 30 Nov 2020 17:03:09 connectionpool.py[line:433] DEBUG https://m-t1.vova.com.hk:443 "POST /index.php?q=admin/main/index/login HTTP/1.1" 200 None
-Mon, 30 Nov 2020 17:03:10 connectionpool.py[line:433] DEBUG https://m-t1.vova.com.hk:443 "POST /index.php?q=admin/main/index/login HTTP/1.1" 200 None

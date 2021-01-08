@@ -1,5 +1,0 @@
-Wed, 23 Dec 2020 19:17:26 test_suite.py[line:25] DEBUG <unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[]>, <unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<product.test_merchant_getAddSubSkuStatus.GetAddSubSkuStatus testMethod=test_getAddSubSkuStatus1>, <product.test_merchant_getAddSubSkuStatus.GetAddSubSkuStatus testMethod=test_getAddSubSkuStatus2>, <product.test_merchant_getAddSubSkuStatus.GetAddSubSkuStatus testMethod=test_getAddSubSkuStatus3>]>]>]>
-Wed, 23 Dec 2020 19:17:26 connectionpool.py[line:937] DEBUG Starting new HTTPS connection (1): m-t1.vova.com.hk:443
-Wed, 23 Dec 2020 19:17:29 connectionpool.py[line:433] DEBUG https://m-t1.vova.com.hk:443 "POST /api/v1/product/getAddSubSkuStatus HTTP/1.1" 500 None
-Wed, 23 Dec 2020 19:17:29 connectionpool.py[line:433] DEBUG https://m-t1.vova.com.hk:443 "POST /api/v1/product/getAddSubSkuStatus HTTP/1.1" 401 None
-Wed, 23 Dec 2020 19:17:31 connectionpool.py[line:433] DEBUG https://m-t1.vova.com.hk:443 "POST /api/v1/product/getAddSubSkuStatus HTTP/1.1" 500 None
