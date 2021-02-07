@@ -6,7 +6,7 @@ from common.read_excel import ReadExcel
 from common.send_request import SendRequest
 
 
-getCatAttr_data=ReadExcel().readExcel(r'../../data/getCatAttr_api.xlsx','Sheet1')
+getCatAttr_data=ReadExcel().readExcel(r'../data/getCatAttr_api.xlsx','Sheet1')
 s=requests.session()
 class GetCatAttr(unittest.TestCase):
     '''查询指定分类属性接口'''

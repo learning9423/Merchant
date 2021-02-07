@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>商家后台测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2.2"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 80%; }
+table       { font-size: 100%; }
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+output_list = Array();
+/*level 调整增加只显示通过用例的分类 --Findyou
+0:Summary //all hiddenRow
+1:Failed  //pt hiddenRow, ft none
+2:Pass    //pt none, ft hiddenRow
+3:All     //pt none, ft none
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level == 2 || level == 0 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level < 2) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+    }
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+	//console.log(detail_class.length)
+	if (level == 3) {
+		for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="收起"
+		}
+	}
+	else{
+			for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="详细"
+		}
+	}
+}
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+</script>
+<div class='heading'>
+<h1 style="font-family: Microsoft YaHei">商家后台测试报告</h1>
+<p class='attribute'><strong>测试人员 : </strong> 测试李建刚</p>
+<p class='attribute'><strong>开始时间 : </strong> 2021-02-03 15:36:13</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:20.809458</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 7，通过 4，失败 1，错误 2，通过率= 57.14%</p>
+
+<p class='description'>商家后台测试环境接口测试，本次测试接口为商品模块接口</p>
+</div>
+
+
+<p id='show_detail_line'>
+<a class="btn btn-primary" href='javascript:showCase(0)'>通过率(57.14%)</a>
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败(1)</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过(4)</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有(7)</a>
+</p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 14px;">
+    <td>用例集/测试用例</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>详细</td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>product.test_merchant_updateGoodsByType.UpdateGoodsByType: 修改商品名称、描述或分类</td>
+    <td class="text-center">7</td>
+    <td class="text-center">4</td>
+    <td class="text-center">1</td>
+    <td class="text-center">2</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',7)" class="detail" id='c1'>详细</a></td>
+</tr>
+
+<tr id='pt1_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_updateGoodsByType1: 修改商品名称</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1' style='background-color: #696969' >通过</button>
+    <div id='div_pt1_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_1' style='background-color: #696969'>通过</button>
+    <div id='div_pt1_1' class="collapse in">
+    <pre>
+    
+pt1_1: {'execute_status': 'success', 'error_list': [], 'message': '修改商品名称成功'}
+[{'id': 'api_01', 'name': '修改商品名称、描述或分类', 'description': '修改商品名称', 'method': 'post', 'url': 'https://m-t1.vova.com.hk/api/v1/product/updateGoodsByType', 'params': '', 'headers': "{'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}", 'body': '{\n "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo",\n "type": "goods_name",\n "update_info": [{\n  "product_id": "1064667",\n  "value": "test goods name of this goods"\n }]\n}', 'sql': "select vg.virtual_goods_id from goods g inner join virtual_goods vg on g.goods_id=vg.goods_id\nwhere g.merchant_id='13' and g.goods_sn like 'SN%' and g.is_on_sale='0' and g.is_delete='0'", 'type': 'json', 'expect_result': '"execute_status": "success"', 'msg': 'message:"修改商品名称成功"'}, {'id': 'api_02', 'name': '修改商品名称、描述或分类', 'description': '修改商品描述', 'method': 'post', 'url': 'https://m-t1.vova.com.hk/api/v1/product/updateGoodsByType', 'params': '', 'headers': "{'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}", 'body': '{\n "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo",\n "type": "goods_desc",\n "update_info": [{\n  "product_id": "1102405",\n  "value": "test goods name of this goods"\n }]\n}', 'sql': "select vg.virtual_goods_id from goods g inner join virtual_goods vg on g.goods_id=vg.goods_id\nwhere g.merchant_id='13' and g.goods_sn like 'SN%' and g.is_on_sale='0' and g.is_delete='0'", 'type': 'json', 'expect_result': '"execute_status": "success"', 'msg': '"message": "修改商品描述成功"'}, {'id': 'api_03', 'name': '修改商品名称、描述或分类', 'description': '修改商品分类', 'method': 'post', 'url': 'https://m-t1.vova.com.hk/api/v1/product/updateGoodsByType', 'params': '', 'headers': "{'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}", 'body': '{\n "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo",\n "type": "goods_category",\n "update_info": [{\n  "product_id": "1102407",\n  "value": "6013"\n }]\n}', 'sql': "select vg.virtual_goods_id from goods g inner join virtual_goods vg on g.goods_id=vg.goods_id\nwhere g.merchant_id='13' and g.goods_sn like 'SN%' and g.is_on_sale='0' and g.is_delete='0'", 'type': 'json', 'expect_result': '"execute_status": "success"', 'msg': '"message": "修改商品分类成功"'}, {'id': 'api_04', 'name': '修改商品名称、描述或分类', 'description': '克隆商品无法更改', 'method': 'post', 'url': 'https://m-t1.vova.com.hk/api/v1/product/updateGoodsByType', 'params': '', 'headers': "{'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}", 'body': '{\n "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo",\n "type": "goods_category",\n "update_info": [{\n  "product_id": "26740906",\n  "value": "6013"\n }]\n}', 'sql': "select vg.virtual_goods_id from goods g inner join virtual_goods vg on g.goods_id=vg.goods_id\nwhere g.merchant_id='13' and g.goods_sn like 'GSN%' and g.is_on_sale='0' and g.is_delete='0'", 'type': 'json', 'expect_result': '"execute_status": "partial_success"', 'msg': '"message": "\\n克隆商品或者无权更新商品:{virtual_goods_id};"'}, {'id': 'api_05', 'name': '修改商品名称、描述或分类', 'description': '参数为空', 'method': 'post', 'url': 'https://m-t1.vova.com.hk/api/v1/product/updateGoodsByType', 'params': '', 'headers': "{'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}", 'body': '{\n "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo",\n "type": "",\n "update_info": [{\n  "product_id": " ",\n  "value": ""\n }]\n}', 'sql': '', 'type': 'json', 'expect_result': '"execute_status":\xa0"failed"', 'msg': '"message":\xa0"参数type或product_list不能为空"'}, {'id': 'api_06', 'name': '修改商品名称、描述或分类', 'description': '参数错误', 'method': 'post', 'url': 'https://m-t1.vova.com.hk/api/v1/product/updateGoodsByType', 'params': '', 'headers': "{'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}", 'body': '{\n "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NDEzOTAxNjYsInNjb3BlIjpbImdldCIsInBvc3QiXSwidWlkIjoiMSIsInVOYW1lIjoiMjMzIn0.-KEPLW5z7egKrnSIL4UBL5zGdwgzS77Gxi4NNvnxMpo",\n "type": "goods",\n "update_info": [{\n  "product_id": "{virtual_goods_id}",\n  "value": "test goods name of this goods"\n }]\n}', 'sql': '', 'type': 'json', 'expect_result': '"execute_status": "failed"', 'msg': '"message": "参数type值错误，请检查"'}, {'id': 'api_07', 'name': '修改商品名称、描述或分类', 'description': 'token错误', 'method': 'post', 'url': 'https://m-t1.vova.com.hk/api/v1/product/updateGoodsByType', 'params': '', 'headers': "{'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic bGViYmF5OnBhc3N3MHJk'}", 'body': '{\n "token": "e",\n "type": "goods_name",\n "update_info": [{\n  "product_id": "1102420",\n  "value": "test goods name of this goods"\n }]\n}', 'sql': "select vg.virtual_goods_id from goods g inner join virtual_goods vg on g.goods_id=vg.goods_id\nwhere g.merchant_id='13' and g.goods_sn like 'SN%' and g.is_on_sale='0' and g.is_delete='0'", 'type': 'json', 'expect_result': '"Token error"', 'msg': ''}]
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_updateGoodsByType2: 修改商品描述</div></td>
+    <td colspan='5' align='center'><span class="label label-success success">通过</span></td>
+</tr>
+
+<tr id='pt1_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_updateGoodsByType3: 修改商品分类</div></td>
+    <td colspan='5' align='center'><span class="label label-success success">通过</span></td>
+</tr>
+
+<tr id='ft1_4' class='none'>
+    <td class='failCase'><div class='testcase'>test_updateGoodsByType4: 克隆商品无法更改</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_4' style='background-color: #696969' >失败</button>
+    <div id='div_ft1_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_4' style='background-color: #696969'>失败</button>
+    <div id='div_ft1_4' class="collapse in">
+    <pre>
+    
+ft1_4: Traceback (most recent call last):
+  File "F:\jgliwork\Merchant\testcases\product\test_merchant_updateGoodsByType.py", line 55, in test_updateGoodsByType4
+    self.assertEqual(r.json()['execute_status'], eval(expect_result), msg=r.json())
+AssertionError: 'success' != 'partial_success'
+- success
++ partial_success
+ : {'execute_status': 'success', 'error_list': [], 'message': '修改商品分类成功'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft1_5' class='none'>
+    <td class='errorCase'><div class='testcase'>test_updateGoodsByType5: 参数为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_5' style='background-color: #696969' >错误</button>
+    <div id='div_ft1_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_5' style='background-color: #696969'>错误</button>
+    <div id='div_ft1_5' class="collapse in">
+    <pre>
+    
+ft1_5: Traceback (most recent call last):
+  File "F:\jgliwork\Merchant\testcases\product\test_merchant_updateGoodsByType.py", line 64, in test_updateGoodsByType5
+    self.assertEqual(r.json()['execute_status'], eval(expect_result), msg=r.json())
+  File "&lt;string&gt;", line 1
+    "failed"
+    ^
+SyntaxError: invalid character in identifier
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_6' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_updateGoodsByType6: 参数错误</div></td>
+    <td colspan='5' align='center'><span class="label label-success success">通过</span></td>
+</tr>
+
+<tr id='ft1_7' class='none'>
+    <td class='errorCase'><div class='testcase'>test_updateGoodsByType7: token错误</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_7' style='background-color: #696969' >错误</button>
+    <div id='div_ft1_7' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_7' style='background-color: #696969'>错误</button>
+    <div id='div_ft1_7' class="collapse in">
+    <pre>
+    
+ft1_7: Traceback (most recent call last):
+  File "F:\jgliwork\Merchant\testcases\product\test_merchant_updateGoodsByType.py", line 79, in test_updateGoodsByType7
+    expect_result = updateGoodsByType_data[6]['expect_result'].split(":",1)[1]
+IndexError: list index out of range
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='total_row' class="text-center active">
+    <td>总计</td>
+    <td>7</td>
+    <td>4</td>
+    <td>1</td>
+    <td>2</td>
+    <td>通过率：57.14%</td>
+</tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    
+</body>
+</html>

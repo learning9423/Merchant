@@ -9,7 +9,7 @@ class test_suite(unittest.TestCase):
     def add_case(self):
         suite=unittest.TestSuite()
         spath='../testcases'
-        suite.addTests(unittest.defaultTestLoader.discover(spath,pattern='test_merchant_ableSale.py'))
+        suite.addTests(unittest.defaultTestLoader.discover(spath,pattern='test_merchant_updateGoodsByType.py'))
         return suite
 
     def run_test(self):
