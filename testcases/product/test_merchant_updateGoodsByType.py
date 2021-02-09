@@ -15,6 +15,10 @@ class UpdateGoodsByType(unittest.TestCase):
             if updateGoodsByType_data[i]['sql'] != '' and '{virtual_goods_id}' in updateGoodsByType_data[i]['body']:
                 a=SqlData.themis_data(updateGoodsByType_data[i]['sql'])
                 updateGoodsByType_data[i]['body']=updateGoodsByType_data[i]['body'].replace('{virtual_goods_id}',''.join('%s' %id for id in a[i]))
+                if '{virtual_goods_id}' in updateGoodsByType_data[i]['expect_result']:
+                    updateGoodsByType_data[i]['expect_result']=updateGoodsByType_data[i]['expect_result'].replace('{virtual_goods_id}',''.join('%s' %id for id in a[i]))
+                if '{virtual_goods_id}' in updateGoodsByType_data[i]['msg']:
+                    updateGoodsByType_data[i]['msg']=updateGoodsByType_data[i]['msg'].replace('{virtual_goods_id}',''.join('%s' %id for id in a[i]))
 
     def test_updateGoodsByType1(self):
         '''修改商品名称'''
@@ -60,6 +64,7 @@ class UpdateGoodsByType(unittest.TestCase):
         r=SendRequest.sendRequest(s,updateGoodsByType_data[4])
         expect_result = updateGoodsByType_data[4]['expect_result'].split(":",1)[1]
         msg = updateGoodsByType_data[4]['msg'].split(":",1)[1]
+        print(updateGoodsByType_data[4])
 
         self.assertEqual(r.json()['execute_status'], eval(expect_result), msg=r.json())
         self.assertEqual(r.json()['message'], eval(msg), msg=r.json())
@@ -76,12 +81,9 @@ class UpdateGoodsByType(unittest.TestCase):
     def test_updateGoodsByType7(self):
         '''token错误'''
         r=SendRequest.sendRequest(s,updateGoodsByType_data[6])
-        expect_result = updateGoodsByType_data[6]['expect_result'].split(":",1)[1]
-        msg = updateGoodsByType_data[6]['msg'].split(":",1)[1]
+        expect_result = updateGoodsByType_data[6]['expect_result']
 
-        self.assertEqual(r.json()['execute_status'], eval(expect_result), msg=r.json())
-        self.assertEqual(r.json()['message'], eval(msg), msg=r.json())
-
+        self.assertEqual(r.json(), eval(expect_result), msg=r.json())
 
 if __name__ == '__main__':
     UpdateGoodsByType().test_updateGoodsByType1()
